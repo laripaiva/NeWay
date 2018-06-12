@@ -16,10 +16,11 @@ endif;
             $readUser->exeRead("users", "WHERE id = :id", "id={$userId}");
 
             require('_models\AdminUsuarios.class.php');
-                $habilitar = new AdminUsuarios;
-                $habilitar->Habilitar($userId, $data);
-                frontErro($habilitar->getError()[0], $habilitar->getError()[1]);           
+                $desabilitar = new AdminUsuarios;
+                $desabilitar->Habilitar($userId, $data);    
+                if($desabilitar->getResult()){
+                    header ('Location: ../admin/painel.php?exe=usuarios/desabilitados&habilitado=true&usuario=' . $userId);
+                }     
         ?>
-         <a href="../admin/painel.php?exe=usuarios/index"><input type="button" value="Visualizar Usuários"></a>
     <article>
 </div> 

@@ -18,8 +18,9 @@ endif;
             require('_models\AdminUsuarios.class.php');
                 $habilitar = new AdminUsuarios;
                 $habilitar->Desabilitar($userId, $data);
-                frontErro($habilitar->getError()[0], $habilitar->getError()[1]);           
+                if($habilitar->getResult()){
+                    header ('Location: ../admin/painel.php?exe=usuarios/habilitados&desabilitado=true&usuario=' . $userId);
+                }
         ?>
-         <a href="../admin/painel.php?exe=usuarios/index"><input type="button" value="Visualizar Usuários"></a>
     <article>
 </div>

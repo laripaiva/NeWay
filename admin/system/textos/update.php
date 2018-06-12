@@ -62,6 +62,9 @@ endif;
             </form>
         </article>
         
+        
     </article>
-
+    <script src="JS/jquery-3.3.1.js" type="text/javascript" charset="utf-8" async defer></script>
+	<script src="JS/materialize.js"></script>
+	<script src="JS/usus.js"></script>
 </div> 

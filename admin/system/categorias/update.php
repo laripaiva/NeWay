@@ -9,11 +9,11 @@ if (!class_exists('Login')) :
 endif;
 ?>
 
-<div class="content form_create">
+<div class="container">
     <article>
 
         <header>
-            <h1>Atualizar categoria:</h1>
+            <h4>Atualizar categoria:</h4>
         </header>
 
         <?php
@@ -48,7 +48,7 @@ endif;
                 <span class="field">Nome:</span>
                 <input type="text" name="nome" value="<?php if (isset($data)) echo $data['nome']; ?>" />
             </label>
-            <input type="submit" class="btn green" value="Cadastrar Categoria" name="SendPostForm" />
+            <input type="submit"class="modal-close waves-effect waves-green btn modal-trigger" value="Atualizar Categoria" name="SendPostForm" />
         </form>
     </article>
 </div> 

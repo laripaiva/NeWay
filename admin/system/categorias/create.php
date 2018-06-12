@@ -9,37 +9,35 @@ if (!class_exists('Login')) :
 endif;
 ?>
 
-<div class="content form_create">
+<div class="container">
 
-    <article>
+    <!-- Modal Cadastro -->
+    <form name="CatForm" action="" method="post" enctype="multipart/form-data">
+        <div class="modal-content">
+            <h4 class="center-align">Cadastrar Categoria</h4>
+    <?php
+        $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+        if (!empty($data['SendPostForm'])){
+            unset ($data['SendPostForm']);
 
-        <header>
-            <h1>Criar categoria:</h1>
-        </header>
-
-        <?php
-            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
-            if (!empty($data['SendPostForm'])){
-                unset ($data['SendPostForm']);
-
-                require('_models\AdminCat.class.php');
-                $cadastra = new AdminCat;
-                $cadastra->ExeCreateCat($data);
-
-                if(!$cadastra->getResult()){
-                    frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
-                }
-                else{
-                    header ('Location: painel.php?exe=categorias/index&create=true&categoria=' . $cadastra->getResult());
-                }
+            require('_models\AdminCat.class.php');
+            $cadastra = new AdminCat;
+            $cadastra->ExeCreateCat($data);
+            if(!$cadastra->getResult()){
+                frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
             }
-        ?>
-        <form name="CatForm" action="" method="post" enctype="multipart/form-data">
-            <label class="label">
-                <span class="field">Nome:</span>
-                <input type="text" name="nome" value="<?php if (isset($data)) echo $data['nome']; ?>" />
-            </label>
-            <input type="submit" class="btn green" value="Cadastrar Categoria" name="SendPostForm" />
-        </form>
-    </article>
+            else{
+                header ('Location: painel.php?exe=categorias/index&create=true&categoria=' . $cadastra->getResult());
+            }
+        }
+    ?>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="first_name" placeholder="Placeholder" type="text" class="validate" name="nome" value="<?php if (isset($data)) echo $data['nome']; ?>" >
+                    <label for="first_name">Nome</label>
+                </div>
+            </div>
+            <input type="submit" class="modal-close waves-effect waves-green btn modal-trigger" value="Cadastrar Categoria" name="SendPostForm" />
+        </div>
+    </form>
 </div> 

@@ -1,6 +1,28 @@
-<div class="content cat_list">
-    <section>
-        <h1>Habilitar Alunos </h1>
+<div class="container">
+    <div class="row">
+        <div class="col l12 s12">
+					
+        <?php
+            
+            // /************************************************************************************************
+            //     * VERIFICAR SE ERROS E SUCESSOS
+            //     ************************************************************************************************/
+            $habilitado = filter_input(INPUT_GET, 'habilitado', FILTER_VALIDATE_BOOLEAN); 
+            $user = filter_input (INPUT_GET, 'usuario', FILTER_VALIDATE_INT);
+            
+            if ($user){
+                $readUser = new Read;
+                $readUser->exeRead("users", "WHERE id = :id", "id={$user}");
+                $dataUser = $readUser->getResult()[0];
+            }
+        ?>
+
+        <?php
+            if ($habilitado && $user){
+                frontErro("O aluno(a) <b>{$dataUser['nome']} </b>foi habilitado com sucesso.", ACCEPT);
+            }
+        ?>
+
         <?php
             require('_models\AdminUsuarios.class.php');
             $readData = new AdminUsuarios;
@@ -8,30 +30,36 @@
 
             if ($readData->getResult()){
                 $alunos = $readData->getResult();
+        ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Sobrenome</th>
+                            <th>E-mail</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        <?php
                 foreach ($alunos->getResult() as $ses){
                     extract($ses);
         ?>
-         
-                <section>
-                    <?php
-                    ?>
-                    <header>
-                        <p class="tagline"><b>Identificador: </b><?=$id;?></p>
-                        <p class="tagline"><b>Nome: </b><?=$nome;?></p>
-                        <p class="tagline"><b>Sobrenome: </b><?=$nome_final;?></p>
-                        <p class="tagline"><b>Email: </b><?=$email;?></p>
-                        <ul>
-                            <li><a class="act_delete" href="painel.php?exe=usuarios/habilitar&usuario=<?=$id;?>" title="Habilitar aluno">Habilitar aluno(a)</a></li>                        
-                        </ul>
-                        
-                    </header>
-                    
-                </section>
+                
+                    <tr id="<?=$id;?>">
+                        <td><?=$nome;?></td>
+                        <td><?=$nome_final;?></td>
+                        <td><?=$email;?></td>
+                        <td><a class="waves-effect waves-light btn" href="painel.php?exe=usuarios/habilitar&usuario=<?=$id;?>">Habilitar</a></td>
+                    </tr>
         <?php 
-          }
-        }else{
-            frontErro("Não há usuários pendentes.", E_USER_NOTICE);
-        }
+                }
+            }else{
+                frontErro("Não há usuários desabilitados.", E_USER_NOTICE);
+            }
         ?>
-    </section>
+                    </tbody>
+                </table>
+		</div>
+	</div>
 </div> 

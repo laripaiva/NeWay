@@ -37,7 +37,7 @@ endif;
                     $readCat = new Read;
                     $readCat->exeRead("categorys", "WHERE nome = :n", "n={$data['categoria']}");
                     $cat = $readCat->getResult()[0];
-                    header('Location: painel.php?exe=cursos/create&categoria=' . $cat['id']);
+                    header('Location: painel.php?exe=cursos/update&categoria=' . $cat['id'] . '&curso=' . $course['id']);
                 }
 
             }

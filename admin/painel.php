@@ -21,41 +21,48 @@ if ($logoff){
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
     <head>
-        <meta charset="UTF-8">
-        <title>Área administrativa</title>
-		<link rel="stylesheet" href="css/reset.css" />
-		<link rel="stylesheet" href="css/admin.css" />   
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title></title>
+        <link rel="shortcut icon" href="" type="image/x-icon"/> 
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="admin/gerenciarCategoria.js"></script>
+        <link rel="stylesheet" href="css/dashboard.css">
+        <link rel="stylesheet" href="css/usus.css"> 
+        <link rel="stylesheet" href="css/gerenciarUsuario.css"> 
+        <link rel="stylesheet" href="CSS/style.css"> 
+        <link rel="stylesheet" href="CSS/home.css">
     </head>
 
-    <body class="painel">
-
-        <header id="navadmin">
-            <div class="content">
-                <h1 class="logomarca"></h1>
-                <ul>
-                    <li class="username">Olá, <?= $userlogin['nome']; ?> <?= $userlogin['nome_final']; ?></li>
-                    <li><a href="painel.php?logoff=true">Sair</a></li>
+    <body>
+        <header>
+            <nav>
+            <div class="nav-wrapper">
+                <a href="painel.php?exe=index" class="brand-logo">NeWay - Administração</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="painel.php?exe=index">Dashboard</a></li>
+                    <li><a class="modal-trigger" href="painel.php?exe=categorias/index">Gerenciar Categorias</a></li>
+                    <li><a href="painel.php?exe=cursos/create">Cadastrar Curso</a></li>
+                    <li><a href="painel.php?exe=usuarios/index">Gerenciar Usuários</a></li>
+                    <li><a  href="painel.php?logoff=true">Sair</a></li>
                 </ul>
-                <nav>
-                    <h1><a href="painel.php?exe=index" title="Dasboard">Painel de Controle</a></h1>
-                    <?php
-                    //ATIVA MENU
-                    if (isset($getexe)):
-                        $linkto = explode('/', $getexe);
-                    else:
-                        $linkto = array();
-                    endif;
-                    ?>
-                        <ul class="sub">
-                            <li><a href="painel.php?exe=cursos/index">Gerenciar cursos</a></li>
-                            <li><a href="painel.php?exe=usuarios/index">Gerenciar usuários</a></li>
-                        </ul>
-                    </li>
-                </nav>
-            </div><!--/CONTENT-->
+            </div>
+            <?php
+                //ATIVA MENU
+                if (isset($getexe)):
+                    $linkto = explode('/', $getexe);
+                else:
+                    $linkto = array();
+                endif;
+            ?>
+            </nav>
         </header>
+        
         <div id="painel">
             <?php
             //QUERY STRING
@@ -79,6 +86,36 @@ if ($logoff){
             endif;
             ?>
         </div> <!-- painel -->
-
+        <script src="JS/jquery-3.3.1.js" type="text/javascript" charset="utf-8" async defer></script>
+	    <script src="JS/materialize.js"></script>
+	    <script src="JS/dash.js"></script>
     </body>
+    <footer>
+		<footer class="page-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col l6 s12">
+						<h5 class="white-text">Sobre Nós</h5>
+						<p class="grey-text text-lighten-4">Moramos nas redondezas da UFRRJ, nosso país.</p>
+
+					</div>
+					<div class="col l4 offset-l2 s12">
+						<h5 class="white-text">Links</h5>
+						<ul>
+							<li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+							<li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+							<li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+							<li><a class="grey-text text-lighten-3" href="#!">Em caso de dúvidas envie um email para: neway@gmail.com</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div class="container">
+					© 2018 Equipe Capivara: Ana, Lari e Gustavo
+					<a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+				</div>
+			</div>
+		</footer>
+	</footer>
 </html>
