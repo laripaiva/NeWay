@@ -1,0 +1,6 @@
+Consertar bugs vídeos, textos
+criar delete em videos, modulos, textos e cursos
+Botar foto no create dos cursos
+consertar bug impressão 
+por o certificado no link de impressão
+botar erros no cadastro (SENHA)
