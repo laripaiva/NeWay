@@ -14,6 +14,6 @@
         <p>It's a trap, Bino </p>
     <li><a href="user/register">Assinar</a></li>
     <li><a href="user/login">Login</a></li>
-
+<!--AHHHHHHHHHHHH-->
     </body>
 </html>
