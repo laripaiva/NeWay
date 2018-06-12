@@ -1,7 +1,6 @@
 <?php
 session_start();
 require('../_app/Config.inc.php');
-
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -36,15 +35,31 @@ require('../_app/Config.inc.php');
                 <span>Senha:</span>
                 <input type="password" name="pass" id="pass"/>
             </label>
+            <br><br>
+            <label>
+                <span>Confirmar Senha:</span>
+                <input type="password" name="pass2" id="pass2"/>
+            </label>
             <input type="submit" name="UserRegister" value="Cadastrar"/>
             </form>
             <?php
                 $register = new Register;
                 $dataRegister = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
                 var_dump ($dataRegister);
 
                 if (!empty($dataRegister['UserRegister'])){
+                  if (strlen($dataRegister['name']) < 2){
+                    frontErro("Nome muito pequeno", E_USER_WARNING);
+                    die();
+                    }
+                  if (strlen($dataRegister['pass']) < 6){
+                    frontErro("Senha muito curta", E_USER_WARNING);
+                    die();
+                    }
+                  if ($dataRegister['pass'] != $dataRegister['pass2'] ){
+                    frontErro("Confirmação da senha incorreta", E_USER_WARNING);
+                    die();
+                    }
                     $register->exeRegister($dataRegister);
                     frontErro($register->getError()[0], $register->getError()[1]);
                     if (!$register->getResult()){
@@ -58,7 +73,6 @@ require('../_app/Config.inc.php');
                     $search->exeRead ("users", "WHERE id = :id", "id={$register->getResult()}");
                     $print = $search->getResult()[0];
                     var_dump($print);
-
             ?>
                 <form name="ConfirmForm" action="..\_app\Models\boleto_itau.php" method="post">
                 <p>Confirme os dados a seguir: </p>
