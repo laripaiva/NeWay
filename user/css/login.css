@@ -1,0 +1,39 @@
+html{
+	background-color: rgb(255,255,224);
+}
+
+nav{
+	background-color: #054F77;
+}
+.main{
+	padding-top: 10%;
+}
+
+.form{
+	background-color: #800000;
+	margin: 0 auto;
+	width: 50%; /* Valor da Largura */
+	height: 30%;
+	padding-top: 2%;
+	border-radius: 15px;
+}
+@media (max-width: 600px){
+	.form{
+		width: 80%;
+		height: 35%;
+		margin-left:10%; 
+	}
+}
+
+#logar{
+	background-color: #054F77;
+	left: 50%;
+	position: absolute;
+	transform: translateX(-50%);
+}
+label{
+	color: white;
+}
+i{
+	color: white;
+}
