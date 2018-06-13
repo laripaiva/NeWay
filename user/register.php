@@ -22,7 +22,7 @@ require('../_app/Config.inc.php');
     				<a href="#!" class="brand-logo">NeWay</a>
     				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     				<ul class="right hide-on-med-and-down">
-    					<li><a href="index.php">Home</a></li>
+    					<li><a href="../index.php">Home</a></li>
     					<li><a href="register.php">Cadastre-se</a></li>
     				</ul>
     			</div>
@@ -77,7 +77,7 @@ require('../_app/Config.inc.php');
             <!-- <a id="logar" type="submit" name="UserRegister" class="waves-effect waves-light btn center-align"><i class="material-icons right">person_add</i>Cadastrar</a> -->
             <input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect waves-light btn center-align"/>
             </form>
-          </div>
+
             <?php
                 $register = new Register;
                 $dataRegister = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -85,17 +85,21 @@ require('../_app/Config.inc.php');
 
                 if (!empty($dataRegister['UserRegister'])){
                   if (strlen($dataRegister['name']) < 2){
-                    frontErro("Nome muito pequeno", E_USER_WARNING);
+                    frontErro("<div class='alerta error'><center> Nome muito pequeno </center> </div>", E_USER_WARNING);
                     die();
                     }
                   if (strlen($dataRegister['pass']) < 6){
-                    frontErro("Senha muito curta", E_USER_WARNING);
+                    frontErro("<div class='alerta error'><center> Senha muito curta </center> </div>", E_USER_WARNING);
                     die();
                     }
                   if ($dataRegister['pass'] != $dataRegister['pass2'] ){
-                    frontErro("Confirmação da senha incorreta", E_USER_WARNING);
+                    frontErro("<div class='alerta error'><center> Confirmação da senha incorreta </center> </div>", E_USER_WARNING);
                     die();
                     }
+                  if(!filter_var($dataRegister['email'], FILTER_VALIDATE_EMAIL)){
+                    frontErro("<div class='alerta error'><center> E-mail incorreto </center> </div>", E_USER_WARNING);
+                    die();
+                  }
                     $register->exeRegister($dataRegister);
                     frontErro($register->getError()[0], $register->getError()[1]);
                     if (!$register->getResult()){
@@ -110,6 +114,7 @@ require('../_app/Config.inc.php');
                     $print = $search->getResult()[0];
                     var_dump($print);
             ?>
+              </div>
                 <form class="form z-depth-5" name="ConfirmForm" action="..\_app\Models\boleto_itau.php" method="post">
                   <div class="container">
                       <p>Confirme os dados a seguir: </p>
@@ -160,7 +165,7 @@ require('../_app/Config.inc.php');
                   <label for="icon_prefix">Estado:</label>
                 </div>
 
-                <input type="submit" name="UserRegister" value="Imprimir boleto"/>
+                <input type="submit" name="UserRegister" class="waves-effect waves-light btn center-align" value="Imprimir boleto"/>
                 </form>
               </div>
             <?php

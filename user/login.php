@@ -24,10 +24,10 @@ require('../_app/Config.inc.php');
     <header>
   		<nav>
   			<div class="nav-wrapper">
-  				<a href="#!" class="brand-logo">NeWay</a>
+  				<a href="../index.php" class="brand-logo">NeWay</a>
   				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
   				<ul class="right hide-on-med-and-down">
-  					<li><a href="index.php">Home</a></li>
+  					<li><a href="../index.php">Home</a></li>
   					<li><a href="register.php">Cadastre-se</a></li>
   				</ul>
   			</div>
@@ -54,8 +54,9 @@ require('../_app/Config.inc.php');
               <input id="icon_telephone" type="password" name="pass" id="pass" class="validate">
               <label for="icon_telephone">Password</label>
               <!--<input type="password" name="pass" id="pass"/> -->
-              <a id="logar" type="submit" name="UserLogin" value="Logar" class="waves-effect waves-light btn center-align"><i class="material-icons right">cloud</i>Logar</a>
+              <!--<a id="logar" type="submit" name="UserLogin" value="Logar" class="waves-effect waves-light btn center-align"><i class="material-icons right">cloud</i>Logar</a> -->
     				</div>
+            <input type="submit" name="UserLogin" class="waves-effect waves-light btn center-align" value="Entrar"/>
 
         <?php
             $login = new Login(2);
@@ -69,13 +70,13 @@ require('../_app/Config.inc.php');
                 $login->exeLogin($dataLogin);
                 if (!$login->getResult()){
                     frontErro($login->getError()[0], $login->getError()[1]);
-                    frontErro("Seu pagamento ainda não foi identificado. Envie o comprovante para o email @exemplo.", E_USER_WARNING);
+                    frontErro("<div class='alerta info'>Seu pagamento ainda não foi identificado. Envie o comprovante para o email @exemplo.</div>", E_USER_WARNING);
                     $userId = $login->getId();
                     $readUser = new Read;
                     $readUser->exeRead("users", "WHERE id = :id", "id={$userId}");
                     $user = $readUser->getResult()[0];
         ?>
-            Clique <a href="segunda-via.php?aluno=<?php echo $user['id'];?>&nome=<?php echo $user['nome'];?>&sobrenome=<?php echo $user['nome_final'];?>">aqui</a> para imprimir a segunda via do boleto.
+          <div class='alerta atencao'>Clique <a href="segunda-via.php?aluno=<?php echo $user['id'];?>&nome=<?php echo $user['nome'];?>&sobrenome=<?php echo $user['nome_final'];?>">aqui</a> para imprimir a segunda via do boleto.</div>
         <?php
                 }else{
                     header('Location: dashboard.php?exe=index');

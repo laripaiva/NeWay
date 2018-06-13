@@ -1,3 +1,31 @@
+.alerta {
+	padding: 20px;
+	border: 1px solid gray;
+	border-radius: 3px;
+	margin: 8px;
+	font-size: 16px;
+}
+.error {
+	border-color: #e8273b;
+	color: #FFF;
+	background-color: #ed5565;
+}
+.sucesso {
+	border-color: #87c940;
+	color: #FFF;
+	background-color: #a0d468;
+}
+.atencao {
+	border-color: #f4a911;
+	color: #FFF;
+	background-color: #f6bb42;
+}
+.info {
+	border-color: #2f80e7;
+	color: #FFF;
+	background-color: #5d9cec;
+}
+
 html{
 	background-color: rgb(255,255,224);
 }
@@ -12,7 +40,7 @@ nav{
 .form{
 	background-color: #800000;
 	margin: 0 auto;
-	width: 50%; 
+	width: 50%;
 	height: 60%;
 	padding-top: 2%;
 	border-radius: 15px;
@@ -21,7 +49,7 @@ nav{
 	.form{
 		width: 80%;
 		height: 65%;
-		margin-left:10%; 
+		margin-left:10%;
 	}
 	.main{
 	padding-top: 10%;
