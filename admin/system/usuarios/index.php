@@ -1,3 +1,6 @@
+<div class="neway z-depth-5">
+		<p class="title center-align">Gerenciar usuários</p>
+	</div>
 <div class="container">
     <?php
         $readData = new Read;
@@ -16,7 +19,7 @@
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-image">
-                        <img src="imagens/user.png">
+                        <img src="imagens/user2.png">
                         <a class="btn-floating halfway-fab waves-effect waves-light red" href="painel.php?exe=usuarios/desabilitados"><i class="material-icons">chevron_right</i></a>
                     </div>
                     <div class="card-content">
@@ -28,7 +31,7 @@
             <div class="col s12 l6">
                 <div class="card">
                     <div class="card-image">
-                        <img src="imagens/user2.png">
+                        <img src="imagens/user.png">
                         <a class="btn-floating halfway-fab waves-effect waves-light red" href="painel.php?exe=usuarios/habilitados"><i class="material-icons">chevron_right</i></a>
                     </div>
                     <div class="card-content">

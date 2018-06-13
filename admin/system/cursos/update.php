@@ -11,69 +11,74 @@ endif;
 
 <div class="content form_create">
 
-    <article>
+    <div class="neway z-depth-5">
+        <p class="title center-align">Atualizar Curso</p>
+    </div>
 
-        <header>
-            <h1>Atualizar curso:</h1>
-        </header>
-
-        <?php
-            $cursoId = filter_input(INPUT_GET, "curso");
-            echo $cursoId;
-            $readCourse = new Read;
-            $readCourse->exeRead("courses", "WHERE id = :id", "id={$cursoId}");
-            var_dump($readCourse->getResult()[0]);
-            $dataCourse = $readCourse->getResult()[0];
-
-
-            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
-            var_dump($data);
-            // //Pega o id de curso da URL
-            // $courseId = filter_input (INPUT_GET, 'courseId', FILTER_VALIDATE_INT);
-
-            // if (!empty($data['SendPostForm'])){
-            //     unset ($data['SendPostForm']);
-
-            //     require('_models\AdminCursos.class.php');
-            //     $cadastra = new AdminCursos;
-            //     $cadastra->ExeUpdateCursos($courseId, $data);
-            //     frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
-            // }else{
-            //     $read = new Read;
-            //     $read->exeRead("courses", "WHERE id = :id", "id={$courseId}");
-            //     if (!$read->getResult()){
-            //         //Se for gerado update falso, quer dizer que tentamos atualizar algo que não existe
-            //         header ('Location: painel.php?exe=cursos/index&empty=true');
-            //     }else{
-            //         $data = $read->getResult()[0];
-            //     }
-            // }
-            // /**
-            //  * Cadastrado -> Atualizar
-            //  */
-            // $checkCreate = filter_input(INPUT_GET, 'create', FILTER_VALIDATE_BOOLEAN);
-            // if ($checkCreate == 1){
-            //     frontErro("O curso <b>{$data['titulo']}</b> foi cadastrado com sucesso. Continue atualizando.", ACCEPT);
-            // }
-        ?>
-       <form name="CursoForm" action="" method="post" enctype="multipart/form-data">
-            <label class="label">
-                <span class="field">Titulo:</span>
-                <input type="text" name="titulo" value="<?php if (isset($dataCourse)) echo  $dataCourse ['titulo']; ?>" />
-            </label>
+    <?php
+        $courseId= filter_input(INPUT_GET, 'courseId');
+        $categoria = filter_input(INPUT_GET, 'categoria');
         
-            <label class="label">
-                <span class="field">Carga Horária (horas/minutos):</span>
-                <input type=time name="carga_horaria" value="<?php if (isset($dataCourse)) echo  $dataCourse ['carga_horaria']; ?>"/>
-            </label>
+        $readCourse = new Read;
+        $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
+        $dataCourse = $readCourse->getResult()[0];
+        $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
 
-            <label class="label">
-                <span class="field">Descrição:</span>
-                <textarea name="descricao" rows="5"><?php if (isset($dataCourse)) echo $dataCourse ['descricao']; ?></textarea>
-            </label>
+        $data['categoria'] = $categoria;
 
-            <input type="submit" class="btn green" value="Cadastrar Curso" name="SendPostForm" />
-        </form>
+        if (!empty($data['SendPostForm'])){
+            unset ($data['SendPostForm']);
 
-    </article>
+            require('_models\AdminCursos.class.php');
+            $cadastra = new AdminCursos;
+            $cadastra->ExeUpdateCursos($courseId, $data);
+            if ($cadastra->getResult()){
+                header ('Location: painel.php?exe=cursos/upload&update=true&curso=' . $courseId);
+            }else{
+                frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
+            }
+            
+        }else{
+            $read = new Read;
+            $read->exeRead("courses", "WHERE id = :id", "id={$courseId}");
+            if (!$read->getResult()){
+                //Se for gerado update falso, quer dizer que tentamos atualizar algo que não existe
+                header ('Location: painel.php?exe=cursos/index&empty=true');
+            }else{
+                $data = $read->getResult()[0];
+            }
+        }
+        // /**
+        //  * Cadastrado -> Atualizar
+        //  */
+        // $checkCreate = filter_input(INPUT_GET, 'create', FILTER_VALIDATE_BOOLEAN);
+        // if ($checkCreate == 1){
+        //     frontErro("O curso <b>{$data['titulo']}</b> foi cadastrado com sucesso. Continue atualizando.", ACCEPT);
+        // }
+    ?>
+         <section class="container">
+			<div class="row">
+                <form name="CursoForm" action="" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+                            <input type="text" id="textarea1" class="materialize-textarea" name="titulo" value="<?php if (isset($dataCourse)) echo $dataCourse['titulo']; ?>"></textarea>
+							<label id="textarea1">Título do Curso</label>
+						</div>
+						<div class="input-field col s12">
+							<input type="text" id="textarea1" class="materialize-textarea" name="descricao" value="<?php if (isset($dataCourse)) echo  $dataCourse['descricao']; ?>"></textarea>
+							<label for="textarea1">Descrição</label>
+						</div>
+						<div class="input-field col s12">
+							<input type="time" id="textarea1" class="materialize-textarea" name="carga_horaria" value="<?php if (isset($dataCourse)) echo  $dataCourse['carga_horaria'];?>"/>
+							<label for="textarea1">Carga Horária</label>
+						</div>
+					</div>	
+                    <input type="submit" class="btn waves-effect waves-light sub" value="Atualizar Curso" name="SendPostForm" />
+                    
+					<!-- <button class="btn waves-effect waves-light sub" type="submit" name="SendPostForm">Cadastrar
+						<i class="material-icons right">send</i>
+					</button>		 -->
+				</form>
+			</div>
+	    </section>
 </div> 

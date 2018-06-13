@@ -94,12 +94,12 @@
             }
              
             $readName = new Read;
-            $readName->ExeRead(self::Entity, "WHERE {$where} titulo = :t", "t={$this->data['titulo']}"); 
+            $readName->ExeRead(self::Entity, "WHERE {$where} titulo = :t AND categoria = :c", "t={$this->data['titulo']}&c={$this->data['categoria']}"); 
             
             
             //Caso exista um curso já cadastrado com esse nome será retornado um erro
             if ($readName->getResult()){
-                $this->error = ['<b>Erro ao cadastrar</b>, nome de curso já existente.',  E_USER_WARNING];
+                $this->error = ['<b>Erro ao cadastrar</b>, nome de curso já existente nesse mesmo módulo.',  E_USER_WARNING];
             }else{
                 self::Create();
             }
@@ -117,12 +117,12 @@
             }
              
             $readName = new Read;
-            $readName->ExeRead(self::Entity, "WHERE {$where} titulo = :t", "t={$this->data['titulo']}"); 
+            $readName->ExeRead(self::Entity, "WHERE {$where} titulo = :t AND categoria = :c", "t={$this->data['titulo']}&c={$this->data['categoria']}"); 
             
             
             //Caso exista um curso já cadastrado com esse nome será retornado um erro
             if ($readName->getResult()){
-                $this->error = ['<b>Erro ao atualizar</b>, nome de curso já existente.',  E_USER_WARNING];
+                $this->error = ['<b>Erro ao atualizar</b>, nome de curso já existente no mesmo módulo.',  E_USER_WARNING];
             }else{
                 self::Update();
             }

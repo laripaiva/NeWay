@@ -30,12 +30,34 @@ if ($logoff){
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-        <script src="admin/gerenciarCategoria.js"></script>
+        <script src="js/gerenciarCategoria.js"></script>
+        <script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8" async defer></script>
+	    <script src="js/materialize.js"></script>
+	    <script src="js/dash.js"></script>
+        <script src="js/home.js"></script>
+        <script src="js/visu.js"></script>
         <link rel="stylesheet" href="css/dashboard.css">
         <link rel="stylesheet" href="css/usus.css"> 
-        <link rel="stylesheet" href="css/gerenciarUsuario.css"> 
-        <link rel="stylesheet" href="CSS/style.css"> 
-        <link rel="stylesheet" href="CSS/home.css">
+        <!-- <link rel="stylesheet" href="css/gerenciarUsuario.css">  -->
+        <link rel="stylesheet" href="css/style.css"> 
+        <link rel="stylesheet" href="css/home.css">
+        <!-- <link rel="stylesheet" href="css/visu.css"> -->
+        <!-- <link rel="stylesheet" href="CSS/cadCurso.css">
+        <script src="js/cadCurso.js"></script> -->
+        <script type="text/javascript">//<![CDATA[
+            window.onload=function(){
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+            }//]]> 
+
+        </script>
+        <script type="text/javascript">//<![CDATA[
+            // Tabs => módulos
+            $(document).ready(function(){
+   	        $('.tabs').tabs();
+            });
+        </script>
     </head>
 
     <body>
@@ -47,7 +69,6 @@ if ($logoff){
                 <ul class="right hide-on-med-and-down">
                     <li><a href="painel.php?exe=index">Dashboard</a></li>
                     <li><a class="modal-trigger" href="painel.php?exe=categorias/index">Gerenciar Categorias</a></li>
-                    <li><a href="painel.php?exe=cursos/create">Cadastrar Curso</a></li>
                     <li><a href="painel.php?exe=usuarios/index">Gerenciar Usuários</a></li>
                     <li><a  href="painel.php?logoff=true">Sair</a></li>
                 </ul>
@@ -86,9 +107,6 @@ if ($logoff){
             endif;
             ?>
         </div> <!-- painel -->
-        <script src="JS/jquery-3.3.1.js" type="text/javascript" charset="utf-8" async defer></script>
-	    <script src="JS/materialize.js"></script>
-	    <script src="JS/dash.js"></script>
     </body>
     <footer>
 		<footer class="page-footer">
@@ -118,4 +136,5 @@ if ($logoff){
 			</div>
 		</footer>
 	</footer>
+   
 </html>

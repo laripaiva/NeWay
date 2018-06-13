@@ -1,3 +1,6 @@
+<div class="neway z-depth-5">
+		<p class="title center-align">Gerenciar categorias</p>
+	</div>
 <div class="container">
         
     <?php
