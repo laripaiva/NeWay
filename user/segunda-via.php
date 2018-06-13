@@ -15,6 +15,7 @@ $nomef = filter_input(INPUT_GET, 'sobrenome');
         <link rel="stylesheet" href="css/reset.css" />
         <link rel="stylesheet" href="css/admin.css" />
         <link rel="stylesheet" type="text/css" href="css\style.css" />
+        <script type="text/javascript" src="./js/cep.js"></script>
 
     </head>
     <body class="login">
@@ -27,26 +28,36 @@ $nomef = filter_input(INPUT_GET, 'sobrenome');
         <br><br>
         <label>
             <span>Nome Final:</span>
-            <input type="text" name="nome_final" value="<?php echo $nomef;?>"/> 
-        </label>  
-        <p>Informe os dados para gerar o boleto: </p>  
-        <label>
-            <span>Endereço:</span>
-            <input type="text" name="endereco"/> 
-        </label>  
-        <label>
-            <span>Cidade:</span>
-            <input type="text" name="cidade"/> 
-        </label>  
-        <label>
-            <span>Estado:</span>
-            <input type="text" name="estado"/> 
-        </label>  
+            <input type="text" name="nome_final" value="<?php echo $nomef;?>"/>
+        </label>
+        <p>Informe os dados para gerar o boleto: </p>
         <label>
             <span>CEP:</span>
-            <input type="text" name="CEP"/> 
-        </label> 
-        <input type="submit" name="UserRegister" value="Imprimir boleto"/>  
+            <input type="text" name="CEP" id="cep" value="" size="10" maxlength="9"
+                   onblur="pesquisacep(this.value);"/>
+        </label>
+
+        <label>
+            <span>Rua:</span>
+            <input type="text" name="endereco" id="rua"/>
+        </label>
+        <label>
+            <span>Bairro:</span>
+            <input type="text" name="bairro" id="bairro"/>
+        </label>
+        <label>
+            <span>Numero:</span>
+            <input type="number" name="numero" />
+        </label>
+        <label>
+            <span>Cidade:</span>
+            <input type="text" name="cidade" id="cidade"/>
+        </label>
+        <label>
+            <span>Estado:</span>
+            <input type="text" name="estado" id="uf"/>
+        </label>
+        <input type="submit" name="UserRegister" value="Imprimir boleto"/>
         </form>
     </body>
 </html>

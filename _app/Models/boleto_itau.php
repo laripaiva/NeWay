@@ -10,6 +10,8 @@ $endereco = $_POST["endereco"];
 $cidade = $_POST["cidade"];
 $estado = $_POST["estado"];
 $cep = $_POST["CEP"];
+$bairro = $_POST["bairro"];
+$numero = $_POST["numero"];
 
 // DADOS DO BOLETO PARA O SEU CLIENTE
 $dias_de_prazo_para_pagamento = 5;
@@ -29,7 +31,7 @@ $dadosboleto["valor_boleto"] = $valor_boleto; 	// Valor do Boleto - REGRA: Com v
 // DADOS DO SEU CLIENTE
 
 $dadosboleto["sacado"] = $nome[0] . $nome[1] . $nome[2];
-$dadosboleto["endereco1"] = $endereco;
+$dadosboleto["endereco1"] = $endereco. " " . $numero . " " . $bairro;
 $dadosboleto["endereco2"] = $cidade . " - " . $estado . "- " . $cep;
 
 // INFORMACOES PARA O CLIENTE
