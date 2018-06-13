@@ -77,6 +77,7 @@ require('../_app/Config.inc.php');
             <!-- <a id="logar" type="submit" name="UserRegister" class="waves-effect waves-light btn center-align"><i class="material-icons right">person_add</i>Cadastrar</a> -->
             <input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect waves-light btn center-align"/>
             </form>
+          </div>
             <?php
                 $register = new Register;
                 $dataRegister = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -109,51 +110,63 @@ require('../_app/Config.inc.php');
                     $print = $search->getResult()[0];
                     var_dump($print);
             ?>
-                <form name="ConfirmForm" action="..\_app\Models\boleto_itau.php" method="post">
-                <p>Confirme os dados a seguir: </p>
-                <label>
-                    <span>Nome: </span>
-                    <input type="text" name="nome" value="<?php echo $print['nome'];?>"/>
-                </label>
-                <br><br>
-                <label>
-                    <span>Nome Final:</span>
-                    <input type="text" name="nome_final" value="<?php echo $print['nome_final'];?>"/>
-                </label>
-                <p>Informe os dados para gerar o boleto: </p>
-                <label>
-                    <span>CEP:</span>
-                    <input type="text" name="CEP" id="cep" value="" size="10" maxlength="9"
-                           onblur="pesquisacep(this.value);"/>
-                </label>
+                <form class="form z-depth-5" name="ConfirmForm" action="..\_app\Models\boleto_itau.php" method="post">
+                  <div class="container">
+                      <p>Confirme os dados a seguir: </p>
+                    <div class="input-field ">
+                      <input  value="<?php echo $print['nome'];?>" name="name" id="icon_prefix" type="text" class="validate">
+                      <label for="icon_prefix">Nome</label>
+                    </div>
 
-                <label>
-                    <span>Rua:</span>
-                    <input type="text" name="endereco" id="rua"/>
-                </label>
-                <label>
-                    <span>Bairro:</span>
-                    <input type="text" name="bairro" id="bairro"/>
-                </label>
-                <label>
-                    <span>Numero:</span>
-                    <input type="number" name="numero" />
-                </label>
-                <label>
-                    <span>Cidade:</span>
-                    <input type="text" name="cidade" id="cidade"/>
-                </label>
-                <label>
-                    <span>Estado:</span>
-                    <input type="text" name="estado" id="uf"/>
-                </label>
+                    <div class="input-field ">
+                      <input name="nome_final" value="<?php echo $print['nome_final'];?>" name="name" id="icon_prefix" type="text" class="validate">
+                      <label for="icon_prefix">Sobrenome:</label>
+                    </div>
+
+                <p>Informe os dados para gerar o boleto: </p>
+                <div class="input-field ">
+                  <input  type="text" name="CEP" id="cep" value="" size="10" maxlength="9"
+                         onblur="pesquisacep(this.value);"class="validate"/>
+                  <label for="icon_prefix">CEP:</label>
+                </div>
+
+                <div class="input-field ">
+                  <input  type="text" type="text" name="endereco" id="rua" value=""
+                         class="validate"/>
+                  <label for="icon_prefix">RUA:</label>
+                </div>
+
+                <div class="input-field ">
+                  <input  type="text" type="text" name="bairro" id="bairro" value=""
+                         class="validate"/>
+                  <label for="icon_prefix">Bairro:</label>
+                </div>
+
+                <div class="input-field ">
+                  <input  type="text" type="text"  value=""
+                         class="validate"/>
+                  <label for="icon_prefix">Numero:</label>
+                </div>
+
+                <div class="input-field ">
+                  <input  name="cidade" id="cidade"  type="text"  value=""
+                         class="validate"/>
+                  <label for="icon_prefix">Cidade:</label>
+                </div>
+
+                <div class="input-field ">
+                  <input name="estado" id="uf" type="text"  value=""
+                         class="validate"/>
+                  <label for="icon_prefix">Estado:</label>
+                </div>
 
                 <input type="submit" name="UserRegister" value="Imprimir boleto"/>
                 </form>
+              </div>
             <?php
             }
             ?>
-        </div>
+        </main>
         <footer>
 
 
