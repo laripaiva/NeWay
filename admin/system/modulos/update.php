@@ -16,12 +16,31 @@ endif;
         <?php
             // //PEGA ID DO MODULO PELA URL E FAZ LEITURA
             $moduleId = filter_input (INPUT_GET, 'modulo', FILTER_VALIDATE_INT);
-            $readModule = new Read;
-            $readModule->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
+            $courseId = filter_input (INPUT_GET, 'course', FILTER_VALIDATE_INT);
             
-            $dataModule = $readModule->getResult()[0];
-            
+            if ($courseId){
+                $readCourse = new Read;
+                $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
+                $dataCourse = $readCourse->getResult()[0];
+                if (!$dataCourse){
+                    header ('Location: painel.php?exe=index&empty=true');
+                }elseif($moduleId){
+                    $readModule = new Read;
+                    $readModule->exeRead("modules", "WHERE id = :id AND id_courses = :idc", "id={$moduleId}&idc={$courseId}");
+                    if($readModule->getResult()){
+                        $dataModule = $readModule->getResult()[0];
+                    }elseif(!$readModule->getResult()){
+                        header ('Location: painel.php?exe=index&empty=true');
+                        //PRECISO CONSERTAR ISSO
+                    }   
+                }else{
+                    header ('Location: painel.php?exe=index&empty=true');
+                } 
+            }else{
+                header ('Location: painel.php?exe=index&empty=true');
+            }
         ?>
+        <section class="container">
         <?php
             $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
     
@@ -35,7 +54,7 @@ endif;
                 if ($cadastra->getResult()){
                     header ('Location: painel.php?exe=modulos/index&update=true&modulo=' .  $moduleId);
                 }else{
-                    frontErro("oi", E_USER_NOTICE);
+                    header ('Location: painel.php?exe=modulos/index&empty=true&curso=' . $dataModule['id_courses']);
                 }
                 
             }
@@ -50,8 +69,6 @@ endif;
             //     }
             // }
         ?>
-
-        <section class="container">
 			<div class="row">
                 <form name="CursoForm" action="" method="post">
 					<div class="row">

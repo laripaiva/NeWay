@@ -20,12 +20,11 @@
     </div>
 
     <section id="" class="categoria container">
-
-
     <?php
         $update = filter_input(INPUT_GET, 'update', FILTER_VALIDATE_BOOLEAN);
         $curso = filter_input(INPUT_GET, 'curso', FILTER_VALIDATE_INT);
         $create = filter_input(INPUT_GET, 'create', FILTER_VALIDATE_BOOLEAN);
+        $empty= filter_input(INPUT_GET, 'empty', FILTER_VALIDATE_BOOLEAN);
 
         if ($curso || $update || $create){
             $readCourse = new Read;
@@ -39,6 +38,8 @@
             frontErro("O curso <b>{$dataCourse['titulo']}</b> foi atualizado.", ACCEPT);
         }elseif($create && $curso){
             frontErro("O curso <b>{$dataCourse['titulo']}</b> foi cadastrado.", ACCEPT);
+        }elseif($empty){
+            frontErro("<b>Erro</b>, a operação não pode ser realizada.", E_USER_WARNING);
         }
     ?>
     <?php

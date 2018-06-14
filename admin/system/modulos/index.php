@@ -4,6 +4,8 @@
             $courseId = filter_input (INPUT_GET, 'course', FILTER_VALIDATE_INT);
             $moduleId = filter_input (INPUT_GET, 'modulo', FILTER_VALIDATE_INT);
             $update = filter_input(INPUT_GET, 'update', FILTER_VALIDATE_BOOLEAN);
+            $empty = filter_input(INPUT_GET, 'empty', FILTER_VALIDATE_BOOLEAN);
+
             if ($courseId){
                 $readCourse = new Read;
                 $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
@@ -25,6 +27,8 @@
         <?php 
             if ($moduleId && $update){
                frontErro("Módulo <b>{$modulos['titulo']}</b> atualizado com sucesso.", ACCEPT);
+            }elseif($empty){
+                frontErro("<b>Erro:</b> o módulo não pode ser atualizado.", E_USER_WARNING);
             }
         ?>
         <div class="cads">
@@ -37,14 +41,10 @@
             ?>
                     <div class="card">
                         <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4"><?=$titulo;?><i class="material-icons right">more_vert</i></span>
-                            <p><a href="painel.php?exe=modulos/update&modulo=<?=$id?>">Editar</a></p>
+                            <span class="card-title activator grey-text text-darken-4"><?=$titulo;?></span>
+                            <p><a href="painel.php?exe=modulos/update&modulo=<?=$id?>&course=<?=$id_courses?>">Editar</a></p>
                             <p><a href="painel.php?exe=textos/index&modulo=<?=$id?>">Gerenciar Textos</a></p>
                             <p><a href="painel.php?exe=videos/index&modulo=<?=$id?>">Gerenciar Vídeos</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4"><?=$titulo;?><i class="material-icons right">close</i></span>
-                            <p><?=$descricao;?></p>
                         </div>
                     </div>
             <?php

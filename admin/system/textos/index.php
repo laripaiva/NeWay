@@ -7,7 +7,7 @@
         $nome= $readModule->getResult()[0];
     ?>
     <div class="neway z-depth-5">
-        <p class="title center-align">Gerenciar Arquivos no módulo  <?php echo $nome['titulo']; ?></p>
+        <p class="title center-align">Gerenciar Arquivos no módulo:  <?php echo $nome['titulo']; ?></p>
     </div>
     
         <?php
@@ -27,13 +27,15 @@
         ?>
             <section>
                 <header>
-                    <h1><?=$titulo; ?></h1><br> 
+                <div class="container">
+                    <h1 class="center-align"><?=$titulo; ?></h1><br> 
                     <p class="tagline"><b>Descrição: </b><?=$descricao; ?></p>
-                    <embed height="300" src="<?=$diretorio; ?>" width="300"></embed>
+                    <embed height="500px" src="<?=$diretorio; ?>" width="100%"></embed>
                     <ul>
                     <li><a class="act_edit" href="painel.php?exe=textos/update&texto=<?=$id?>&nameModule=<?=  $nome['titulo'];?>">Editar</a></li>
                         <li><a class="act_delete" href="painel.php?exe=cursos/delete&courseId=<?=$id?>" title="Excluir">Deletar</a></li>
                     </ul>
+                    </div>
                 </header>
             </section>
         <?php 
