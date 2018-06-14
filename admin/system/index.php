@@ -1,4 +1,13 @@
-
+<?php
+/**
+ * Caso aja tentativa de acessar essa página sem passar pelo painel, irá ser redirecionado para o painel
+ * Método para previnir acessos inadequados ao sistema
+ */
+if (!class_exists('Login')) :
+    header('Location: ../../painel.php');
+    die;
+endif;
+?>
     <!-- // <section id="slide-curso">
     //     <div class="neway z-depth-5">
     //         <p class="title center-align">O caminho para o sucesso na palma da sua mão!</p>
@@ -14,6 +23,7 @@
     //         <p class="title center-align">Nossos Cursos:</p>
     //     </div>
     // </section> -->
+    
     
     <div class="neway z-depth-5">
         <p class="title center-align">Gerenciar Cursos</p>

@@ -1,0 +1,18 @@
+.trigger{position: relative; padding: 20px; color: #333; background: #ccc; border: 1px solid #333; font:400 14px 'Verdana', sans-serif;}
+
+.trigger{border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px;}
+
+.trigger .ajax_close{position: absolute; right: 10px; cursor: pointer; top: 10px; background: black; width: 20px; height: 20px; display: none;}
+
+.trigger.accept{background-color: #E5F8CE; border-color: #D0F1A6;}
+
+.trigger.infor{background-color: #fceeb5; border-color: #fcdb55;}
+
+.trigger.alert{background-color: #fcc662; border-color:#f7a711;}
+
+.trigger.error{background-color: #fca9a9; border-color: #f96868;}
+
+
+
+
+

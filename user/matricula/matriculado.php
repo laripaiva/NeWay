@@ -10,18 +10,20 @@ endif;
 ?>
 <div>
     <?php
-        $data['id_courses']  = filter_input (INPUT_GET, 'curso', FILTER_VALIDATE_INT);
+        $data['id_courses']  = filter_input (INPUT_GET, 'course', FILTER_VALIDATE_INT);
+
+        $readCourse = new Read;
+        $readCourse->exeRead("courses", "WHERE id = :id", "id={$data['id_courses']}");
+        $readCourse = $readCourse->getResult()[0];
+
         $data['id_user']  = filter_input (INPUT_GET, 'aluno', FILTER_VALIDATE_INT);
 
         $readRegister = new Read;
         $readRegister->exeRead("watch_courses", "WHERE id_user = :idu AND id_courses = :idc", "idu={$data['id_user']}&idc={$data['id_courses']}");
 
         if ($readRegister->getResult()){
-            echo "you can't do register anymore";
-            die;
+            header('Location: dashboard.php?exe=index&empty=true&mat=false&course=' . $readCourse['titulo']);
         }?>
-        
-        <p> oi </p>
         
         <?php
             if (!$readRegister->getResult()){
@@ -30,9 +32,7 @@ endif;
 
 
             if ($register->getResult()){
-                echo "oi linda";
-            }else{
-                echo "não deu certo";
+                header('Location: dashboard.php?exe=index&mat=true&course=' . $readCourse['titulo']);
             }
         }
     ?>
