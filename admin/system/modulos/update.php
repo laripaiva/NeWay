@@ -10,75 +10,80 @@ endif;
 ?>
 
 <div class="content form_create">
-
+    <div class="neway z-depth-5">
+        <p class="title center-align">Atualizar Módulo</p>
+    </div>
         <?php
-            /**
-             * VERIFICADOR DE VARIÁVEL CREATE 
-             */
-            $checkCreate = filter_input(INPUT_GET, 'create', FILTER_VALIDATE_BOOLEAN);
-            $nameModule = filter_input(INPUT_GET, 'nameModule');
-            $idCourse = filter_input(INPUT_GET, 'idCourse', FILTER_VALIDATE_INT);
-            if ($checkCreate == 1){
-                frontErro("O módulo <b>{$nameModule}</b> foi cadastrado com sucesso. Continue atualizando.", ACCEPT);
-            } 
-            /*************************************/
-
             // //PEGA ID DO MODULO PELA URL E FAZ LEITURA
-            $moduleId = filter_input (INPUT_GET, 'moduleId', FILTER_VALIDATE_INT);
-            $readModule = new Read;
-            $readModule->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
-
-            // //PEGA NOME DO CURSO PELA URL
-            $nameCourse = filter_input (INPUT_GET, 'nameCourse');                   
-
+            $moduleId = filter_input (INPUT_GET, 'modulo', FILTER_VALIDATE_INT);
+            $courseId = filter_input (INPUT_GET, 'course', FILTER_VALIDATE_INT);
             
+            if ($courseId){
+                $readCourse = new Read;
+                $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
+                $dataCourse = $readCourse->getResult()[0];
+                if (!$dataCourse){
+                    header ('Location: painel.php?exe=index&empty=true');
+                }elseif($moduleId){
+                    $readModule = new Read;
+                    $readModule->exeRead("modules", "WHERE id = :id AND id_courses = :idc", "id={$moduleId}&idc={$courseId}");
+                    if($readModule->getResult()){
+                        $dataModule = $readModule->getResult()[0];
+                    }elseif(!$readModule->getResult()){
+                        header ('Location: painel.php?exe=index&empty=true');
+                        //PRECISO CONSERTAR ISSO
+                    }   
+                }else{
+                    header ('Location: painel.php?exe=index&empty=true');
+                } 
+            }else{
+                header ('Location: painel.php?exe=index&empty=true');
+            }
         ?>
-
-    <article>
-
-        <header>
-            <h1>Atualizar módulo no curso <?php echo $nameCourse; ?></h1>
-        </header>
-
-        
+        <section class="container">
         <?php
-             $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
     
             if (!empty($data['SendPostForm'])){
                 unset ($data['SendPostForm']);
 
                 require('_models\AdminModulos.class.php');
                 $cadastra = new AdminModulos;
-                $cadastra->ExeUpdateModulos($moduleId, $data, $idCourse);
+                $cadastra->ExeUpdateModulos($moduleId, $data, $dataModule['id_courses']);
                 
-                frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
-            }
-            else{
-                $read = new Read;
-                $read->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
-                if (!$read->getResult()){
-                    //Se for gerado update falso, quer dizer que tentamos atualizar algo que não existe
-                    header ('Location: painel.php?exe=cursos/index&empty=true');
+                if ($cadastra->getResult()){
+                    header ('Location: painel.php?exe=modulos/index&update=true&modulo=' .  $moduleId);
                 }else{
-                    $data = $read->getResult()[0];
+                    header ('Location: painel.php?exe=modulos/index&empty=true&curso=' . $dataModule['id_courses']);
                 }
+                
             }
+            // else{
+            //     $read = new Read;
+            //     $read->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
+            //     if (!$read->getResult()){
+            //         //Se for gerado update falso, quer dizer que tentamos atualizar algo que não existe
+            //         header ('Location: painel.php?exe=cursos/index&empty=true');
+            //     }else{
+            //         $data = $read->getResult()[0];
+            //     }
+            // }
         ?>
-
-        <form name="UpdateForm" action="" method="post" enctype="multipart/form-data">
-            <label class="label">   
-                <span class="field">Titulo:</span>
-                <input type="text" name="titulo" value="<?php if (isset($data)) echo $data['titulo']; ?>" />
-            </label>
-           
-            <label class="label">
-                <span class="field">Descrição:</span>
-                <textarea name="descricao" rows="5"><?php if (isset($data)) echo $data['descricao']; ?></textarea>
-            </label>
-            <input type="submit" class="btn blue" value="Atualizar Modulo" name="SendPostForm" />
-        </form>
-
-    </article>
-
-    <div class="clear"></div>
+			<div class="row">
+                <form name="CursoForm" action="" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+                            <input type="text" id="textarea1" class="materialize-textarea" name="titulo" value="<?php if (isset($dataModule)) echo $dataModule['titulo']; ?>"></textarea>
+							<label id="textarea1">Título do Módulo</label>
+						</div>
+						<div class="input-field col s12">
+							<input type="text" id="textarea1" class="materialize-textarea" name="descricao" value="<?php if (isset($dataModule)) echo  $dataModule['descricao']; ?>"></textarea>
+							<label for="textarea1">Descrição</label>
+						</div>
+					</div>	
+                    <input type="submit" class="btn waves-effect waves-light sub" value="Atualizar Curso" name="SendPostForm" />
+                    
+				</form>
+			</div>
+	    </section>
 </div> 

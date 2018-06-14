@@ -33,7 +33,7 @@ endif;
     ?>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="first_name" placeholder="Placeholder" type="text" class="validate" name="nome" value="<?php if (isset($data)) echo $data['nome']; ?>" >
+                    <input id="first_name" type="text" class="validate" name="nome" value="<?php if (isset($data)) echo $data['nome']; ?>" >
                     <label for="first_name">Nome</label>
                 </div>
             </div>

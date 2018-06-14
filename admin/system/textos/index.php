@@ -1,14 +1,15 @@
 <div class="content cat_list">
-
+    
     <?php
-        $moduleId = filter_input (INPUT_GET, 'module', FILTER_VALIDATE_INT);
+        $moduleId = filter_input (INPUT_GET, 'modulo', FILTER_VALIDATE_INT);
         $readModule = new Read;
         $readModule->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
         $nome= $readModule->getResult()[0];
     ?>
-    <section>
-        <h1>Textos no módulo <?php echo $nome['titulo']; ?>:</h1>
-        <li><a href="painel.php?exe=textos/create&module=<?php echo $moduleId;?>">Adicionar novo arquivo</a></li>
+    <div class="neway z-depth-5">
+        <p class="title center-align">Gerenciar Arquivos no módulo:  <?php echo $nome['titulo']; ?></p>
+    </div>
+    
         <?php
             $empty = filter_input(INPUT_GET, 'empty', FILTER_VALIDATE_BOOLEAN);
             if ($empty){
@@ -26,17 +27,18 @@
         ?>
             <section>
                 <header>
-                    <h1><?=$titulo; ?></h1><br> 
+                <div class="container">
+                    <h1 class="center-align"><?=$titulo; ?></h1><br> 
                     <p class="tagline"><b>Descrição: </b><?=$descricao; ?></p>
-                    <embed height="300" src="<?=$diretorio; ?>" width="300"></embed>
+                    <embed height="500px" src="<?=$diretorio; ?>" width="100%"></embed>
                     <ul>
                     <li><a class="act_edit" href="painel.php?exe=textos/update&texto=<?=$id?>&nameModule=<?=  $nome['titulo'];?>">Editar</a></li>
                         <li><a class="act_delete" href="painel.php?exe=cursos/delete&courseId=<?=$id?>" title="Excluir">Deletar</a></li>
                     </ul>
+                    </div>
                 </header>
             </section>
         <?php 
           }
         ?>
-    </section>
-</div> <!-- content home -->
+</div> 

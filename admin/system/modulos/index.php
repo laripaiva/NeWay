@@ -1,63 +1,55 @@
-<div class="content cat_list">
-    <section>
-
-        <?php
-            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+<?php
             //Pega o id e nome do curso da URL
-           
-            $courseId = filter_input (INPUT_GET, 'courseId', FILTER_VALIDATE_INT);
-            $readCourse = new Read;
-            $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
-            $nomeCourse = filter_input (INPUT_GET, 'nome');
             
-            
-            
+            $courseId = filter_input (INPUT_GET, 'course', FILTER_VALIDATE_INT);
+            $moduleId = filter_input (INPUT_GET, 'modulo', FILTER_VALIDATE_INT);
+            $update = filter_input(INPUT_GET, 'update', FILTER_VALIDATE_BOOLEAN);
+            $empty = filter_input(INPUT_GET, 'empty', FILTER_VALIDATE_BOOLEAN);
+
+            if ($courseId){
+                $readCourse = new Read;
+                $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
+                $dataCourse = $readCourse->getResult()[0];
+            }elseif( $moduleId && $update){
+                $readModule = new Read;
+                $readModule->exeRead ("modules", "WHERE id = :id", "id={$moduleId}");
+                $modulos = $readModule->getResult()[0];
+                $readCourse = new Read;
+                $readCourse->exeRead("courses", "WHERE id = :id", "id={$modulos['id_courses']}");
+                $dataCourse = $readCourse->getResult()[0];
+            }
         ?>
-        <h1>Modulos do curso <?php echo $nomeCourse; ?></h1>
-        <li><a class="act_delete" href="painel.php?exe=modulos/create&courseId=<?php echo $courseId;?>&nomeCourse=<?php echo $nomeCourse;?>" title="Excluir">Criar Modulos</a></li>
-        <?php
+    <div class="neway z-depth-5">
+       <p class="title center-align">Gerenciar Módulos do curso <?php echo $dataCourse['titulo'];?></p>
+    </div>  
 
-            if (!empty($data['SendPostForm'])){
-                unset ($data['SendPostForm']);
-
-                require('_models\AdminCursos.class.php');
-                $cadastra = new AdminCursos;
-                $cadastra->ExeUpdateCursos($courseId, $data);
-                frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
-            }else{ 
-                $readData = new Read;
-                $readData->exeRead("modules", "WHERE id != :d AND id_courses= :idC", "d=0&idC={$courseId}");
-                foreach ($readData->getResult() as $ses){
-                    extract($ses);
-            
-        ?>
-            <section>
-
-                <header>
-                    <h1><?=$titulo;?></h1><br> 
-                    <p class="tagline"><b>Descrição: </b><?=$descricao; ?></p>
-                    <ul>
-                        <li><a class="act_view" target="_blank" href="painel.php?exe=posts/post&id=ID_DO_POST" title="Ver no site">Ver no site</a></li>
-                        <li><a class="act_edit" href="painel.php?exe=modulos/update&moduleId=<?=$id?>&nameCourse=<?= $nomeCourse?>&idCourse=<?=$courseId?>" title="Editar">Editar</a></li>
-                        <li><a class="act_delete" href="painel.php?exe=modulos/delete&moduleId=<?=$id?>" title="Excluir">Deletar</a></li>
-                        <li><a class="act_delete" href="painel.php?exe=videos/index&module=<?=$id?>&name=<?=$titulo;?>" title="Excluir">Gerenciar Vídeos</a></li>
-                        <li><a class="act_delete" href="painel.php?exe=textos/index&module=<?=$id?>&name=<?=$titulo;?>" title="Excluir">Gerenciar Textos</a></li>
-                    </ul>
-                </header>
-                
-               
-                <?php 
-                
-                ?>
-
-            </section>
+    <section id="" class="categoria container">
         <?php 
-          }
-        }
+            if ($moduleId && $update){
+               frontErro("Módulo <b>{$modulos['titulo']}</b> atualizado com sucesso.", ACCEPT);
+            }elseif($empty){
+                frontErro("<b>Erro:</b> o módulo não pode ser atualizado.", E_USER_WARNING);
+            }
         ?>
-
-        <div class="clear"></div>
+        <div class="cads">
+            <?php   
+                $readModule = new Read;
+                $readModule->exeRead("modules", "WHERE id_courses = :idc", "idc={$dataCourse['id']}");
+            
+                foreach ($readModule->getResult() as $ses){
+                    extract($ses);
+            ?>
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4"><?=$titulo;?></span>
+                            <p><a href="painel.php?exe=modulos/update&modulo=<?=$id?>&course=<?=$id_courses?>">Editar</a></p>
+                            <p><a href="painel.php?exe=textos/index&modulo=<?=$id?>">Gerenciar Textos</a></p>
+                            <p><a href="painel.php?exe=videos/index&modulo=<?=$id?>">Gerenciar Vídeos</a></p>
+                        </div>
+                    </div>
+            <?php
+                    }
+            ?>
+        </div> 
     </section>
-
-    <div class="clear"></div>
-</div> <!-- content home -->
+</div>

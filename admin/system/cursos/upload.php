@@ -9,21 +9,29 @@ if (!class_exists('Login')) :
 endif;
 ?>
 
-<div class="content form_create">
+<div class="neway z-depth-5">
+        <p class="title center-align">Upload arquivo</p>
+    </div>
+<div class="container">
     <?php
         $courseId = filter_input (INPUT_GET, 'curso', FILTER_VALIDATE_INT);
-    ?>
-    <article>
+        $update = filter_input (INPUT_GET, 'update',  FILTER_VALIDATE_BOOLEAN);
 
-        <header>
-            <h3>Upload Imagem</h3>
-        </header>
+    ?>
+    
+
         <?php
             require ('..\_app\Helpers\UploadFotos.class.php');  
             require ('..\_app\Helpers\Check.class.php');
             if ($courseId){
-                frontErro("Para continuar o cadastro, faça o upload da foto.", E_USER_NOTICE);
+                $readCourse = new Read;
+                $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
+                $readData = $readCourse->getResult()[0];
+                if (!$update){
+                    frontErro("Para continuar o cadastro, faça o upload da foto.", E_USER_NOTICE);
+                }
             }
+
             if(isset($_POST['enviar'])){
                 $file = $_FILES['arquivo'];
                 if (!empty($file['name'])){
@@ -39,15 +47,27 @@ endif;
                     if (!$cadastra->getResult()){
                         frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
                     }else{
-                        header('Location: painel.php?exe=cursos/index&create=true&upload=true&curso=' . $cadastra->getResult());
+                        header('Location: painel.php?exe=index&create=true&upload=true&curso=' . $courseId);
                     }
-                }    
+                }elseif($update){
+                    header('Location: painel.php?exe=index&update=true&curso=' . $courseId);
+                }
             }
         ?>
         <form name="uploadform" enctype="multipart/form-data" method="post" action="">
-            <input type="file" name="arquivo" value="arquivo" accept="image/*" />
+            <?php 
+                if ($readData['foto']){
+
+                
+            ?>
+                    <embed height="200" src="<?php echo $readData['foto'];?>" width="200"></embed><br><br>
+            <?php
+                }
+            ?>
+            <input type="file" name="arquivo" value="arquivo" accept="image/*" value=""/>
+            <br><br>
             <label>
-            <input name="enviar" type="submit" value="Finalizar">
+            <input name="enviar" class="btn waves-effect waves-light sub" type="submit" value="Finalizar">
             </label>
         </form>
 
