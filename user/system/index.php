@@ -53,7 +53,7 @@ endif;
 
         
 
-       <div class="neway b z-depth-5">
+        <div class="neway b z-depth-5">
 		   <p class="title center-align">Cursos ofertados</p>
 	    </div>
     </section>
@@ -85,7 +85,7 @@ endif;
 					<div class="card-content">
 						<span class="card-title activator grey-text text-darken-4"><?=$titulo;?></span>
                         <p><b>Descrição:</b><?=$descricao;?></p>
-                        <p><a href="painel.php?exe=modulos/index&course=<?=$id?>">Visualizar Módulos</a></p>
+                        <p><a href="dashboard.php?exe=modulos/index&course=<?=$id?>">Visualizar Módulos</a></p>
                         <p><a href="dashboard.php?exe=matricula/matriculado&course=<?=$id;?>&aluno=<?php echo $userlogin['id'];?>">Realizar Matrícula</a></p>
 					</div>
                 </div>

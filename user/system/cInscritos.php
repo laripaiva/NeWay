@@ -15,6 +15,8 @@ endif;
 
 <section id="" class="categoria container">
 
+    <div class="cads">
+
     <?php 
        $readWatch = new Read;
        $readWatch->exeRead("watch_courses", "WHERE id_user = :idu AND id_courses != :idc", "idu={$userlogin['id']}&idc=0");
@@ -48,14 +50,14 @@ endif;
 						<span class="card-title activator grey-text text-darken-4"><?php echo $nome;?></span>
                         <p><b>Categoria:</b><?php echo $readCat['nome'];?></p>
                         <p><b>Descrição:</b><?php echo $descricao;?></p>
-						<p><a href="painel.php?exe=historico.php">Visualizar vídeos</a></p>
+						<p><a href="dashboard.php?exe=modulos/index&course=<?=$id?>">Visualizar Módulos</a></p>
 					</div>
                 </div>
     <?php   
             }
         }
     ?>
-    
+    </div>
     <?php 
     // }
     ?>

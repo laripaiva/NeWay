@@ -65,7 +65,7 @@ if ($logoff){
         <header>
             <nav>
             <div class="nav-wrapper">
-                <a href="painel.php?exe=index" class="brand-logo">NeWay</a>
+                <a href="dashboard.php?exe=index" class="brand-logo">NeWay</a>
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="dashboard.php?exe=index">Home</a></li>
@@ -92,8 +92,9 @@ if ($logoff){
              * Decide qual controlador será executado e carregado no sistema
              * Sistema não entra em pastas, apenas inclui o caminho
              */
+
             if (!empty($getexe)){
-                $includepatch = __DIR__ . '\\' . strip_tags(trim($getexe) . '.php');
+                $includepatch = __DIR__ . '\\system\\'. strip_tags(trim($getexe) . '.php');
             }else{
                 $includepatch = __DIR__ . '\\dashboard.php';
             }
