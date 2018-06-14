@@ -3,9 +3,39 @@ setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
 date_default_timezone_set( 'America/Sao_Paulo' );
 require('fpdf/alphapdf.php');
 require('PHPMailer/class.phpmailer.php');
-$mat = filter_input (INPUT_GET, 'mat', FILTER_VALIDATE_INT);
+require('../Config.inc.php');
+
+$course = filter_input (INPUT_GET, 'curso');
+$aluno= filter_input (INPUT_GET, 'aluno', FILTER_VALIDATE_INT);
+
+if ($course && $aluno){
+  $readCourse = new Read;
+  $readCourse->exeRead("courses", "WHERE titulo = :t","t={$course}");
+  $readCourse = $readCourse->getResult()[0];
+
+  $readUser = new Read;
+  $readUser->exeRead("users", "WHERE id = :t","t={$aluno}");
+  $readUser = $readUser->getResult()[0];
+
+  $fuck = new Read;
+  $fuck->exeRead("watch_courses","WHERE id_user = :id AND id_courses = :idc","id={$aluno}&idc={$readCourse['id']}");
+  $fuck = $fuck->getResult()[0];
+}else{
+    echo "<script> alert('ERRO');</script>";
+    header('#');
+}
 
 
+
+
+
+/*
+$dataUser = new Read;
+$dataUser->exeRead("users","WHERE id = :id","id={$teste['id_user']}");
+$dataUser= $dataUser->getResult()[0];
+
+var_dump($dataUser);
+*/
 /*
 // --------- Variáveis do Formulário ----- //
 
@@ -15,13 +45,14 @@ $cpf      = $dados['id'];
 */
 
 $email    = 'aaaaa';
-$nome = filter_input (INPUT_GET, 'nome');
-$cpf      = $mat;
+//$nome = filter_input (INPUT_GET, 'nome');
+$nome = $readUser['nome'] . ' ' . $readUser['nome_final'];
+$cpf      = 8;
 // --------- Variáveis que podem vir de um banco de dados por exemplo ----- //
 $empresa  = "NeWay Cursos LTDA";
-$curso = filter_input (INPUT_GET, 'curso');
+$curso = $readCourse['titulo'];
 $data     = (strftime( '%d de %B de %Y', strtotime( date( 'Y-m-d' ))));
-$carga_h  = filter_input (INPUT_GET, 'ch') . " horas";
+$carga_h  = $readCourse['carga_horaria'] . " horas";
 
 
 $texto1 = utf8_decode($empresa);
