@@ -28,14 +28,14 @@ $readProgress->exeRead("historic", "WHERE id_watch_courses = :d", "d={$matId}");
     <?php
         $certificado=0;
         foreach ($readData->getResult() as $ses){
-            extract($ses);         
+            extract($ses);
     ?>
         <section>
             <header>
                 <h1><?=$titulo; ?></h1>
                 <p class="tagline"><b>Descrição: </b><?=$descricao; ?></p>
-                <?php 
-                    
+                <?php
+
                     for ($i=0 ; $i < $readProgress->getRowCount(); $i++){
                         $historico = $readProgress->getResult()[$i];
                         if ($historico['id_module'] ==  $id){
@@ -44,7 +44,7 @@ $readProgress->exeRead("historic", "WHERE id_watch_courses = :d", "d={$matId}");
                             // $certificado= $certificado + 1;
                 ?>
                 <p class="tagline"><b>Status: </b><?php echo $result; ?></p>
-                <?php 
+                <?php
 
                         }
                     }
@@ -54,21 +54,21 @@ $readProgress->exeRead("historic", "WHERE id_watch_courses = :d", "d={$matId}");
                 </ul>
             </header>
         </section>
-        <?php 
+        <?php
           }
         ?>
-        <?php      
+        <?php
             if ($readData->getRowCount() == $certificado){
                 $dados = new Read;
                 $dados->exeRead("users", "WHERE id = :id", "id={$userlogin['id']}");
                 $curso = new Read;
-                $curso->exeRead("courses", "WHERE id = :id", "id={$courseId}"); 
+                $curso->exeRead("courses", "WHERE id = :id", "id={$courseId}");
                 $dados= $dados->getResult()[0];
                 $curso =$curso->getResult()[0];
         ?>
-        <a href="..\_app\Models\gerador.php?mat=<?php echo $dados['id'];?>&nome=<?php echo $dados['nome'] . ' ' . $dados['nome_final'] ;?>&curso=<?php echo $curso['titulo'];?>&ch=<?php echo $curso['carga_horaria'];?>">Curso concluído. Imprima o certificado.</a>
-        <?php 
+        <a href="..\_app\Models\gerador.php?aluno=<?php echo $dados['id'];?>&curso=<?php echo $curso['titulo'];?>">Curso concluído. Imprima o certificado.</a>
+        <?php
             }
         ?>
 
-</div> 
+</div>

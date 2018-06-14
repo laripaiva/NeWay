@@ -22,7 +22,7 @@ if ($course && $aluno){
   $fuck = $fuck->getResult()[0];
 }else{
     echo "<script> alert('ERRO');</script>";
-    header('#');
+    header('Location: dashboard.php?index&empty=true');
 }
 
 
