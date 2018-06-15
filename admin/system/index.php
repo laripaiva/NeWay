@@ -8,23 +8,7 @@ if (!class_exists('Login')) :
     die;
 endif;
 ?>
-    <!-- // <section id="slide-curso">
-    //     <div class="neway z-depth-5">
-    //         <p class="title center-align">O caminho para o sucesso na palma da sua mão!</p>
-    //     </div>
-    //     <div class="carousel">
-    //         <a class="carousel-item" href="#one!"><img src="IMAGES/leitura.jpg"></a>
-    //         <a class="carousel-item" href="#two!"><img src="IMAGES/prof.jpg"></a>
-    //         <a class="carousel-item" href="#three!"><img src="IMAGES/profissionais.jpg"></a>
-    //         <a class="carousel-item" href="#four!"><img src="IMAGES/stu.jpg"></a>
-    //         <a class="carousel-item" href="#five!"><img src="IMAGES/studantes.jpg"></a>
-    //     </div>
-    //     <div class="neway b z-depth-5">
-    //         <p class="title center-align">Nossos Cursos:</p>
-    //     </div>
-    // </section> -->
-    
-    
+   
     <div class="neway z-depth-5">
         <p class="title center-align">Gerenciar Cursos</p>
     </div>
