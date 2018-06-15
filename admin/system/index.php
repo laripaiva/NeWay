@@ -43,7 +43,9 @@ endif;
         for ($i=0; $i < $readCat->getRowCount(); $i++){           
     ?>
         <div class="cat z-depth-5">
-            <p class="title"><?php echo $cat[$i]['nome'];?><a href="painel.php?exe=cursos/create&categoria=<?php echo $cat[$i]['id'];?>" class="waves-effect waves-light btn ">cadastrar</a></p>
+            <p class="title2"><?php echo $cat[$i]['nome'];?></p>
+            <div class="mar"></div>
+            <a href="painel.php?exe=cursos/create&categoria=<?php echo $cat[$i]['id'];?>" class="waves-effect light-blue darken-4 btn but2">cadastrar</a>
         </div>
         <div class="cads">
         <?php   
