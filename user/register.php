@@ -50,6 +50,7 @@ if ($login->checkLogin()){
                 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                 if (!empty($data['UserRegister'])){
                   unset($data['UserRegister']);
+                }//estava no final do fomr
               ?>
 
               <div class="input-field ">
@@ -91,10 +92,10 @@ if ($login->checkLogin()){
                   <i class="material-icons right">send</i>
                 </button> -->
             <!-- <a id="logar" type="submit" name="UserRegister" class="waves-effect waves-light btn center-align"><i class="material-icons right">person_add</i>Cadastrar</a> -->
-            <center><input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect waves-light btn center-align"/></center>
+            <center><input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect light-blue darken-4 btn center-align"/></center>
             </form>
           <?php
-        }
+        
             ?>
             <?php
                 $register = new Register;
@@ -150,53 +151,61 @@ if ($login->checkLogin()){
                   <div class="container">
                       <p>Confirme os dados a seguir: </p>
                     <div class="input-field ">
+                      <i class="material-icons prefix">account_circle</i>
                       <input  value="<?php echo $print['nome'];?>" name="nome" id="icon_prefix" type="text" class="validate">
                       <label class="active" for="icon_prefix">Nome</label>
                     </div>
 
                     <div class="input-field ">
+                      <i class="material-icons prefix">account_circle</i>
                       <input name="nome_final" value="<?php echo $print['nome_final'];?>" name="name" id="icon_prefix" type="text" class="validate">
                       <label class="active" for="icon_prefix">Sobrenome:</label>
                     </div>
 
                 <p>Informe os dados para gerar o boleto: </p>
                 <div class="input-field ">
+                  <i class="material-icons prefix">my_location</i>
                   <input  type="text" name="CEP" id="cep" value="" size="10" maxlength="9"
                          onblur="pesquisacep(this.value);"class="validate"/>
                   <label class="active" for="icon_prefix">CEP:</label>
                 </div>
 
                 <div class="input-field ">
+                  <i class="material-icons prefix">location_on</i>
                   <input  type="text" type="text" name="endereco" id="rua" value=""
                          class="validate"/>
-                  <label class="active" for="icon_prefix">RUA:</label>
+                  <label class="active" for="icon_prefix">Rua:</label>
                 </div>
 
                 <div class="input-field ">
+                  <i class="material-icons prefix">home</i>
                   <input class="active" type="text"  name="bairro" id="bairro" value=""
                          class="validate"/>
                   <label class="active" for="icon_prefix">Bairro:</label>
                 </div>
 
                 <div class="input-field ">
+                  <i class="material-icons prefix">assistant_photo</i>
                   <input  type="number"  name="numero" value=""
                          class="validate"/>
                   <label class="active" for="icon_prefix">Numero:</label>
                 </div>
 
                 <div class="input-field ">
+                  <i class="material-icons prefix">location_city</i>
                   <input class="active"  name="cidade" id="cidade"  type="text"  value=""
                          class="validate"/>
                   <label class="active" for="icon_prefix">Cidade:</label>
                 </div>
 
                 <div class="input-field ">
+                  <i class="material-icons prefix">landscape</i>
                   <input name="estado" id="uf" type="text"  value=""
                          class="validate"/>
                   <label class="active" for="icon_prefix">Estado:</label>
                 </div>
 
-                <center><input type="submit" name="UserRegister" class="waves-effect waves-light btn center-align" value="Imprimir boleto"/></center>
+                <center><input type="submit" name="UserRegister" class="waves-effect light-blue darken-4 btn center-align" value="Imprimir boleto"/></center>
                 </form>
               </div>
             <?php
