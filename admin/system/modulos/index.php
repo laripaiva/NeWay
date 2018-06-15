@@ -20,6 +20,10 @@ endif;
         $readCourse = new Read;
         $readCourse->exeRead("courses", "WHERE id = :id", "id={$courseId}");
         $dataCourse = $readCourse->getResult()[0];
+        //CONSERTAR ISSO DEPOIS
+        // if (!$readCourse->getResult()){
+        //     header ('Location: painel.php?exe=index&empty=true');
+        // }
     }elseif( $moduleId && $update){
         $readModule = new Read;
         $readModule->exeRead ("modules", "WHERE id = :id", "id={$moduleId}");

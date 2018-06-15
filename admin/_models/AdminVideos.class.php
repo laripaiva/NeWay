@@ -57,21 +57,19 @@
             $this->data = $data;
             $this->videoId = (int) $videoId;
             $this->dir = $dir;
-
             /**
              * PEGANDO ID DO MODULO
              */
-            $readModule = new Read;
-            $readModule->exeRead("videos", "WHERE id= :id", "id={$videoId}");
-            $module = $readModule->getResult()[0];
+            $readVideo = new Read;
+            $readVideo->exeRead("videos", "WHERE id= :id", "id={$videoId}");
+            $module = $readVideo->getResult()[0];
             $this->moduleId = $module['id_modules'];
-
             //Verificar se há campos em branco no array, se houver retorna erro
             if (in_array('', $this->data)){
                 $this->result = false;
                 $this->error = ['<b>Erro ao atualizar</b>, preencha todos os campos.',  E_USER_WARNING];
             }else{
-                $this->setTitleUpdate();                
+                self::setTitleUpdate();            
             }
         }
         
@@ -93,9 +91,10 @@
 
         private function setTitleCreate(){
 
-            //INSERINDO ID_COURSES NO ARRAY -> OBJETIVO: APARECER NA QUERY
             $this->data['id_modules'] = (int) $this->moduleId;
-            // $this->data['diretorio'] = $this->dir;
+            
+            //INSERINDO ID_COURSES NO ARRAY -> OBJETIVO: APARECER NA QUERY
+            
 
             /**
              * CASO EXISTA UM moduleId SIGNIFICA QUE VOCÊ ESTÁ EDITANDO E NÃO CRIANDO UM NOVO MODULO
@@ -120,20 +119,21 @@
 
         private function setTitleUpdate(){
 
-            echo $this->moduleId;
             /**
              * CASO EXISTA UM courseId SIGNIFICA QUE VOCÊ ESTÁ EDITANDO E NÃO CRIANDO UM NOVO CURSO
              */
+
+             var_dump($this->data);
+             echo $this->moduleId;
             if (!empty($this->videoId)){
-                $where = "id !={$this->videoId} AND id_modules = {$this->moduleId}";
+                $where = "id !={$this->videoId} AND id_modules = {$this->moduleId} AND";
             }else{
                 $where= '';
             }
-            
+
             $readName = new Read;
-            $readName->ExeRead(self::Entity, "WHERE {$where} titulo = :t", "t={$this->data['titulo']}"); 
+            $readName->exeRead("videos", "WHERE {$where} titulo = :t", "t={$this->data['titulo']}"); 
             
-            var_dump($readName);
             //Caso exista um curso já cadastrado com esse nome será retornado um erro
             if ($readName->getResult()){
                 $this->error = ['<b>Erro ao atualizar</b>, nome de vídeo já existente no mesmo módulo.',  E_USER_WARNING];

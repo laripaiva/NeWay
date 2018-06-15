@@ -9,44 +9,48 @@ if (!class_exists('Login')) :
 endif;
 ?>
 
-<div class="content form_create">
+<div class="content form_create">   
+    <div class="neway z-depth-5">
+        <p class="title center-align">Adicionar vídeo</p>
+    </div>
+  
     <?php
-        $moduleId = filter_input (INPUT_GET, 'module', FILTER_VALIDATE_INT);
+        $modulo = filter_input (INPUT_GET, 'module', FILTER_VALIDATE_INT);
+        $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+        if (!empty($data['SendPostForm'])){
+            unset ($data['SendPostForm']);      
+
+            require('_models\AdminVideos.class.php');
+            $cadastra = new AdminVideos;
+            $cadastra->ExeCreateVideos($data, $modulo);
     ?>
-    <article>
+   
+   <section class="container">
+    <?php       
 
-        <header>
-            <h1>Criar vídeo:</h1>
-        </header>
-        <?php
-            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
-            if (!empty($data['SendPostForm'])){
-                unset ($data['SendPostForm']);
-
-                require('_models\AdminVideos.class.php');              
-                $cadastra = new AdminVideos;
-                $cadastra->ExeCreateVideos($data, $moduleId);
-                frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
-                if ($cadastra->getResult()){
-                    header ('Location: painel.php?exe=videos/upload&create=true&video=' . $cadastra->getResult() . '&module=' . $moduleId);     
-                } 
-            }
-        ?>
-        <form name="VideoForm" action="" method="post">
-            <label class="label">
-                <span class="field">Titulo:</span>
-                <input type="text" name="titulo" value="<?php if (isset($data)) echo $data['titulo']; ?>" />
-            </label>
-
-            <label class="label">
-                <span class="field">Descrição:</span>
-                <textarea name="descricao" rows="5"><?php if (isset($data)) echo $data['descricao']; ?></textarea>
-            </label>
-
-            <input type="submit" class="btn green" value="Prosseguir cadastro" name="SendPostForm" />
-        </form>
-
-    </article>
-
-    <div class="clear"></div>
+        if($cadastra->getResult()){
+            header ('Location: painel.php?exe=videos/upload&create=true&video=' . $cadastra->getResult());
+        }else{
+            frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
+        }
+    }
+    ?>
+    </section>  
+        <section class="container">
+			<div class="row">
+                <form name="CursoForm" action="" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+                        <textarea id="textarea1" class="materialize-textarea" name="titulo" value="<?php if (isset($data)) echo $data['titulo']; ?>"></textarea>
+							<label id="textarea1">Título do vídeo</label>
+						</div>
+						<div class="input-field col s12">
+							<textarea id="textarea1" class="materialize-textarea" name="descricao" value="<?php if (isset($data)) echo $data['descricao']; ?>"></textarea>
+							<label for="textarea1">Descrição</label>
+						</div>
+					</div>	
+                    <input type="submit" class="btn waves-effect waves-light sub" value="Cadastrar Video" name="SendPostForm" />
+				</form>
+			</div>
+	    </section>
 </div> 

@@ -10,54 +10,69 @@ endif;
 ?>
 
 <div class="content form_create">
-
-    <article>
+    <div class="neway z-depth-5">
+        <p class="title center-align">Atualizar Video</p>
+    </div>
         <?php
+            // //PEGA ID DO MODULO PELA URL E FAZ LEITURA
+            $moduleId = filter_input (INPUT_GET, 'module', FILTER_VALIDATE_INT);
             $videoId = filter_input (INPUT_GET, 'video', FILTER_VALIDATE_INT);
-            $readVideo = new Read;
-            $readVideo->exeRead("videos", "WHERE id = :id", "id={$videoId}");
-            $data= $readVideo->getResult()[0];
 
-            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
-
-            if (!empty($data['SendPostForm'])){
-                unset ($data['SendPostForm']);
-                require('_models\AdminVideos.class.php');
-                $cadastra = new AdminVideos;
-                $cadastra->ExeUpdateVideos($data, $videoId);
-                frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
-
-                if ($cadastra->getResult()){
-                    header ('Location: painel.php?exe=videos/upload&update=true&video=' . $videoId);
-                }
-            }else{
-                $read = new Read;
-                $read->exeRead("videos", "WHERE id = :id", "id={$videoId}");
-                if (!$read->getResult()){
-                    //Se for gerado update falso, quer dizer que tentamos atualizar algo que não existe
-                    header ('Location: painel.php?exe=cursos/index&empty=true');
+            if ($moduleId){
+                $readModule = new Read;
+                $readModule->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
+                if (!$readModule->getResult()){
+                    header ('Location: painel.php?exe=index&empty=true');
+            }elseif ($videoId){
+                $readVideo = new Read;
+                $readVideo->exeRead("videos", "WHERE id = :id AND id_modules = :idm", "id={$videoId}&idm={$moduleId}");
+                if (!$readVideo->getResult()){
+                    header ('Location: painel.php?exe=index&empty=true');
                 }else{
-                    $data = $read->getResult()[0];
+                    $dataVideo= $readVideo->getResult()[0];
                 }
+            }elseif($videoId==null){
+                header ('Location: painel.php?exe=index&empty=true');
             }
+        }elseif($moduleId==null){
+            header ('Location: painel.php?exe=index&empty=true');
+        }
+            
         ?>
-        <header>
-            <h1>Atualizar Vídeo:</h1>
-        </header>
-        <form name="VideoForm" action="" method="post" enctype="multipart/form-data">
-            <label class="label">   
-                <span class="field">Titulo:</span>
-                <input type="text" name="titulo" value="<?php if (isset($data)) echo $data['titulo']; ?>" />
-            </label>
-           
-            <label class="label">
-                <span class="field">Descrição:</span>
-                <textarea name="descricao" rows="5"><?php if (isset($data)) echo $data['descricao']; ?></textarea>
-            </label>
-            <input type="submit" class="btn blue" value="Atualizar Video" name="SendPostForm"/>
-        </form>
+        <section class="container">
+            <?php
+                $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+        
+                if (!empty($data['SendPostForm'])){
+                    unset ($data['SendPostForm']);
 
-    </article>
-
-    <div class="clear"></div>
+                    require('_models\AdminVideos.class.php');
+                    $cadastra = new AdminVideos;
+                    $cadastra->ExeUpdateVideos($data, $dataVideo['id']);
+                    
+                    if (!$cadastra->getResult()){
+                        frontErro($cadastra->getError()[0],$cadastra->getError()[0]);
+                    }else{
+                        header ('Location: painel.php?exe=videos/upload&update=true&video=' . $dataVideo['id']);
+                    }
+                    
+                }
+            ?>
+			<div class="row">
+                <form name="CursoForm" action="" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+                            <input type="text" id="textarea1" class="materialize-textarea" name="titulo" value="<?php if (isset($dataVideo)) echo $dataVideo['titulo']; ?>"></textarea>
+							<label id="textarea1">Título do Video</label>
+						</div>
+						<div class="input-field col s12">
+							<input type="text" id="textarea1" class="materialize-textarea" name="descricao" value="<?php if (isset($dataVideo)) echo  $dataVideo['descricao']; ?>"></textarea>
+							<label for="textarea1">Descrição</label>
+						</div>
+					</div>	
+                    <input type="submit" class="btn waves-effect waves-light sub" value="Atualizar Video" name="SendPostForm" />
+                    
+				</form>
+			</div>
+	    </section>
 </div> 

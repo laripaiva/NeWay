@@ -9,44 +9,67 @@ if (!class_exists('Login')) :
 endif;
 ?>
 
-<div class="content form_create">
+<div class="neway z-depth-5">
+        <p class="title center-align">Upload Video</p>
+    </div>
+<div class="container">
     <?php
         $videoId = filter_input (INPUT_GET, 'video', FILTER_VALIDATE_INT);
-    ?>
-    <article>
+        $update = filter_input (INPUT_GET, 'update',  FILTER_VALIDATE_BOOLEAN);
 
-        <header>
-            <h1>Upload Vídeo</h1>
-        </header>
+    ?>
+    
+
         <?php
-            require ('..\_app\Helpers\UploadFotos.class.php');
+            require ('..\_app\Helpers\UploadFotos.class.php');  
             require ('..\_app\Helpers\Check.class.php');
+            if ($videoId){
+                $readVideo = new Read;
+                $readVideo->exeRead("videos", "WHERE id = :id", "id={$videoId}");
+                $readData = $readVideo->getResult()[0];
+                if (!$update){
+                    frontErro("Para continuar o cadastro, faça o upload da foto.", E_USER_NOTICE);
+                }
+            }
+
             if(isset($_POST['enviar'])){
                 $file = $_FILES['arquivo'];
-                if (!empty($file['name']){
+                if (!empty($file['name'])){
                     $validateName = new Check;
                     $file['name'] = $validateName->validateName($file['name']);
                     $dir = '..\uploads\videos';
                     $read = new UploadFotos;
                     $read->upload($file, $dir);
-                    require('_models\AdminVideos.class.php');              
-                    $cadastra = new AdminVideos;
-                    $cadastra->ExeUploadVideos($videoId, $read->getDir());
+                    require('_models\AdminFotos.class.php');        
+                    
+                    $readData['diretorio'] = '..\uploads\videos/' . $file['name'];
+
+                    $cadastra = new AdminFotos;
+                    $cadastra->ExeUpdateUploadVideos($readData);
 
                     if (!$cadastra->getResult()){
                         frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
                     }else{
-                        frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
+                        header('Location: painel.php?exe=videos/index&update=true&upload=true&modulo=' . $readData['id_modules']);
                     }
-                }else{
-                    frontErro("Não há arquivo para upload.", E_USER_WARNING);
-                 }         
+                }elseif($update){
+                    header('Location: painel.php?exe=videos/index&update=true&modulo=' . $readData['id_modules']);
+                }
             }
         ?>
         <form name="uploadform" enctype="multipart/form-data" method="post" action="">
-            <input type="file" name="arquivo" value="arquivo" />
+            <?php 
+                if ($readData['diretorio']){
+                
+            ?>
+                     <embed height="500px" src="<?php echo $readData['diretorio'];?>" width="100%"></embed>
+            <?php
+                }
+            ?>
+            <input type="file" name="arquivo" value="arquivo" accept="video/*" value=""/>
+            <br><br>
             <label>
-            <input name="enviar" type="submit" value="Finalizar">
+            <input name="enviar" class="waves-effect  red darken-4 btn" type="submit" value="Finalizar">
             </label>
         </form>
 

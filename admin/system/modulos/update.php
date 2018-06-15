@@ -81,7 +81,7 @@ endif;
 							<label for="textarea1">Descrição</label>
 						</div>
 					</div>	
-                    <input type="submit" class="btn waves-effect waves-light sub" value="Atualizar Curso" name="SendPostForm" />
+                    <input type="submit" class="btn waves-effect waves-light sub" value="Atualizar Modulo" name="SendPostForm" />
                     
 				</form>
 			</div>
