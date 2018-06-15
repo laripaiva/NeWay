@@ -22,7 +22,10 @@
                 frontErro("O aluno(a) <b>{$dataUser['nome']} </b>foi habilitado com sucesso.", ACCEPT);
             }
         ?>
-
+<style type="text/css">
+        tr:hover {background-color:#e8eaf6;}
+        table{margin-top: 20px;}
+  </style>
         <?php
             require('_models\AdminUsuarios.class.php');
             $readData = new AdminUsuarios;
@@ -50,7 +53,7 @@
                         <td><?=$nome;?></td>
                         <td><?=$nome_final;?></td>
                         <td><?=$email;?></td>
-                        <td><a class="waves-effect waves-light btn" href="painel.php?exe=usuarios/habilitar&usuario=<?=$id;?>">Habilitar</a></td>
+                        <td><a class="waves-effect red darken-4 btn" href="painel.php?exe=usuarios/habilitar&usuario=<?=$id;?>">Habilitar</a></td>
                     </tr>
         <?php 
                 }

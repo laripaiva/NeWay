@@ -31,6 +31,10 @@
             if ($readData->getResult()){
                 $alunos = $readData->getResult();
         ?>
+        <style type="text/css">
+        tr:hover {background-color:#e8eaf6;}
+        table{margin-top: 20px;}
+  </style>
                 <table>
                     <thead>
                         <tr>
@@ -52,7 +56,7 @@
                         <td><?=$nome_final;?></td>
                         <td><?=$email;?></td>
                         <td><?=$data_habilitacao;?></td>
-                        <td><a class="waves-effect waves-light btn" href="painel.php?exe=usuarios/desabilitar&usuario=<?=$id;?>">Desabilitar</a></td>
+                        <td><a class="waves-effect red darken-4 btn" href="painel.php?exe=usuarios/desabilitar&usuario=<?=$id;?>">Desabilitar</a></td>
                     </tr>
         <?php 
                 }
