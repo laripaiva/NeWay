@@ -6,6 +6,11 @@ $login = new Login(2);
 if ($login->checkLogin()){
     header('Location:./dashboard.php?exe=index');
     }
+    $nome = '';
+    $nome_final = '';
+    $email = '';
+    $senha = '';
+    $senha2 = '';
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -39,18 +44,24 @@ if ($login->checkLogin()){
     	</header>
       <main class="main">
           <form class="form z-depth-5" name="UserRegisterForm" action="" method="post">
+
             <div class="container">
+              <?php
+                $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                if (!empty($data['UserRegister'])){
+                  unset($data['UserRegister']);
+              ?>
 
               <div class="input-field ">
                 <i class="material-icons prefix">assignment_ind</i>
-    						<input name="name" id="icon_prefix" type="text" class="validate">
+    						<input name="name" value="<?php if (isset($data)) echo $data['name'];?>" id="icon_prefix" type="text" class="validate">
     						<label class="active" for="icon_prefix">Nome</label>
     					</div>
                 <!--<input type="name" name="name" id="name"/>-->
 
                 <div class="input-field ">
       						<i class="material-icons prefix">assignment_ind</i>
-      						<input type="text" name="final_name" id="icon_prefix"  class="validate">
+      						<input type="text"  name="final_name" value="<?php if (isset($data)) echo $data['final_name'];?>" id="icon_prefix"  class="validate">
       						<label class="active" for="icon_prefix">Sobrenome</label>
       					</div>
 
@@ -58,21 +69,21 @@ if ($login->checkLogin()){
 
                 <div class="input-field ">
       						<i class="material-icons prefix">mail</i>
-      						<input type="email" name="email" id="icon_prefix" type="text" class="validate">
+      						<input  name="email" value="<?php if (isset($data)) echo $data['email'];?>" type="email" id="icon_prefix" type="text" class="validate">
       						<label class="active" for="icon_prefix">E-mail</label>
       					</div>
 
                 <!--<input type="email" name="email" id="email"/> -->
                 <div class="input-field ">
       						<i class="material-icons prefix">lock_outline</i>
-      						<input  type="password" name="pass" id="icon_telephone" type="tel" class="validate">
+      						<input value="<?php if (isset($data)) echo $data['pass'];?>"  type="password" name="pass" id="icon_telephone" type="tel" class="validate">
       						<label class="active" for="icon_telephone">Senha</label>
       					</div>
 
                 <!--<input type="password" name="pass" id="pass"/> -->
                 <div class="input-field ">
                   <i class="material-icons prefix">lock_outline</i>
-                  <input type="password" name="pass2" id="icon_telephone" type="tel" class="validate">
+                  <input value="<?php if (isset($data)) echo $data['pass2'];?>" type="password" name="pass2" id="icon_telephone" type="tel" class="validate">
                   <label class="active" for="icon_telephone">Confirmar Senha</label>
                 </div>
                 <!--
@@ -80,53 +91,66 @@ if ($login->checkLogin()){
                   <i class="material-icons right">send</i>
                 </button> -->
             <!-- <a id="logar" type="submit" name="UserRegister" class="waves-effect waves-light btn center-align"><i class="material-icons right">person_add</i>Cadastrar</a> -->
-            <input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect waves-light btn center-align"/>
+            <center><input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect waves-light btn center-align"/></center>
             </form>
-
+          <?php
+        }
+            ?>
             <?php
                 $register = new Register;
                 $dataRegister = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                 //var_dump ($dataRegister);
 
                 if (!empty($dataRegister['UserRegister'])){
+                  $nome = $_POST['name'];
+                  $nome_final = $_POST['final_name'];
+                  $email = $_POST['email'];
+                  $senha = $_POST['pass'];
+                  $senha2 = $_POST['pass2'];
                   $register->exeRegister($dataRegister);
                   //frontErro($register->getError()[0], $register->getError()[1]);
                   if (!$register->getResult()){
-                    frontErro($register->getError()[0], $register->getError()[1]);
+                    frontErro("<div class='alerta error'><center>".$register->getError()[0]."</center></div>", $register->getError()[1]);
                     return false;
                   }
                   if (strlen($dataRegister['name']) == 1 || strlen($dataRegister['name']) == 2 ){
-                    frontErro("Nome muito pequeno", E_USER_ERROR);
+                    frontErro("<div class='alerta error'><center>Nome muito pequeno</center></div>", E_USER_ERROR);
                     return false;
                     }
                   if (strlen($dataRegister['pass']) < 6 && strlen($dataRegister['pass']) != 0){
-                    frontErro("Senha muito curta", E_USER_ERROR);
+                    frontErro("<div class='alerta error'><center>Senha muito curta</center></div>", E_USER_ERROR);
                     return false;
                     }
                   if ($dataRegister['pass'] != $dataRegister['pass2'] ){
-                    frontErro("Confirmação da senha incorreta ", E_USER_ERROR);
+                    frontErro("<div class='alerta error'><center>Confirmação da senha incorreta </center></div>", E_USER_ERROR);
                     return false;
                     }
                   if(!filter_var($dataRegister['email'], FILTER_VALIDATE_EMAIL)){
-                    frontErro("E-mail incorreto", E_USER_ERROR);
+                    frontErro("<div class='alerta error'><center>E-mail incorreto</center></div>", E_USER_ERROR);
                     return false;
                   }
 
                 }
             ?>
+
             <?php
+
                 if ($register->getResult()){
                     $search = new Read;
                     $search->exeRead ("users", "WHERE id = :id", "id={$register->getResult()}");
                     $print = $search->getResult()[0];
-                    var_dump($print);
+                    //var_dump($print);
+
+
             ?>
               </div>
+              <br>
+              <br>
                 <form class="form z-depth-5" name="ConfirmForm" action="..\_app\Models\boleto_itau.php" method="post">
                   <div class="container">
                       <p>Confirme os dados a seguir: </p>
                     <div class="input-field ">
-                      <input  value="<?php echo $print['nome'];?>" name="name" id="icon_prefix" type="text" class="validate">
+                      <input  value="<?php echo $print['nome'];?>" name="nome" id="icon_prefix" type="text" class="validate">
                       <label class="active" for="icon_prefix">Nome</label>
                     </div>
 
@@ -149,13 +173,13 @@ if ($login->checkLogin()){
                 </div>
 
                 <div class="input-field ">
-                  <input class="active" type="text" type="text" name="bairro" id="bairro" value=""
+                  <input class="active" type="text"  name="bairro" id="bairro" value=""
                          class="validate"/>
                   <label class="active" for="icon_prefix">Bairro:</label>
                 </div>
 
                 <div class="input-field ">
-                  <input  type="text" type="number"  value=""
+                  <input  type="number"  name="numero" value=""
                          class="validate"/>
                   <label class="active" for="icon_prefix">Numero:</label>
                 </div>
@@ -172,7 +196,7 @@ if ($login->checkLogin()){
                   <label class="active" for="icon_prefix">Estado:</label>
                 </div>
 
-                <input type="submit" name="UserRegister" class="waves-effect waves-light btn center-align" value="Imprimir boleto"/>
+                <center><input type="submit" name="UserRegister" class="waves-effect waves-light btn center-align" value="Imprimir boleto"/></center>
                 </form>
               </div>
             <?php
