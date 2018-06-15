@@ -8,8 +8,8 @@ require('../_app/Config.inc.php');
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title></title>
-      <link rel="shortcut icon" href="" type="image/x-icon"/>
+      <title>Neway - Login</title>
+      <link rel="shortcut icon" href="media/neway2.png" type="image/x-icon"/>
     	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -44,20 +44,18 @@ require('../_app/Config.inc.php');
 
   					  <div class="input-field ">
               <i class="material-icons prefix">assignment_ind</i>
-              <input type="email" name="email" id="icon_prefix" type="text" class="validate">
-              <label for="icon_prefix">Login</label>
-              <!--<input type="email" name="email" id="email"/> -->
+              <input type="email" name="email" id="login" type="text" class="validate">
+              <label for="login">Login</label>
             </div>
 
             <div class="input-field ">
               <i class="material-icons prefix">lock_outline</i>
-              <input id="icon_telephone" type="password" name="pass" id="pass" class="validate">
-              <label for="icon_telephone">Password</label>
-              <!--<input type="password" name="pass" id="pass"/> -->
-              <!--<a id="logar" type="submit" name="UserLogin" value="Logar" class="waves-effect waves-light btn center-align"><i class="material-icons right">cloud</i>Logar</a> -->
+              <input id="password" type="password" name="pass" id="pass" class="validate">
+              <label for="password">Password</label>
     				</div>
-            <input type="submit" name="UserLogin" class="waves-effect waves-light btn center-align" value="Entrar"/>
-
+            <div class="center-align">
+              <input type="submit" name="UserLogin" class="waves-effect waves-light btn" value="Entrar"/>
+            </div>
         <?php
             $login = new Login(2);
 
@@ -70,13 +68,12 @@ require('../_app/Config.inc.php');
                 $login->exeLogin($dataLogin);
                 if (!$login->getResult()){
                     frontErro($login->getError()[0], $login->getError()[1]);
-                    frontErro("<div class='alerta info'>Seu pagamento ainda não foi identificado. Envie o comprovante para o email @exemplo.</div>", E_USER_WARNING);
                     $userId = $login->getId();
                     $readUser = new Read;
                     $readUser->exeRead("users", "WHERE id = :id", "id={$userId}");
                     $user = $readUser->getResult()[0];
         ?>
-          <div class='alerta atencao'>Clique <a href="segunda-via.php?aluno=<?php echo $user['id'];?>&nome=<?php echo $user['nome'];?>&sobrenome=<?php echo $user['nome_final'];?>">aqui</a> para imprimir a segunda via do boleto.</div>
+                  <div>Clique <a href="segunda-via.php?aluno=<?php echo $user['id'];?>&nome=<?php echo $user['nome'];?>&sobrenome=<?php echo $user['nome_final'];?>">aqui</a> para imprimir a segunda via do boleto.</div>
         <?php
                 }else{
                     header('Location: dashboard.php?exe=index');

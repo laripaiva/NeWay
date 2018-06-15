@@ -25,6 +25,10 @@ nav{
 	}
 }
 
+#enviar{
+	color: white;
+}
+
 #logar{
 	background-color: #054F77;
 	left: 50%;
@@ -35,5 +39,8 @@ label{
 	color: white;
 }
 i{
+	color: white;
+}
+input{
 	color: white;
 }

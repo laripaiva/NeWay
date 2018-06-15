@@ -57,15 +57,16 @@
                 $this->error = ['Informe seu e-mail e senha para efetuar login!', E_USER_WARNING];
                 $this->result = false;
             }elseif(!$this->getUser()){
-              $this->error = ['Os dados informados não são compatíveis.', E_USER_ERROR];
+              $this->error = ['Os dados informados não são compatíveis.', E_USER_WARNING];
               $this->result = false;
             }
             elseif($this->result['level'] != $this->level){
-                $this->error = ["{$this->result['nome']}, seu login não foi autorizado.", E_USER_ERROR];
+                $this->error = ["{$this->result['nome']}, seu login não foi autorizado.", E_USER_NOTICE];
                 $this->id = (int) $this->result['id'];
                 self::getId();
                 $this->result = false;
-               
+            }elseif($this->result['level'] == 1){
+                $this->error = ["Seu pagamento ainda não foi identificado. Envie o comprovante para o email @exemplo.", E_USER_WARNING];
             }
             else{
                 //execute() já passa $result = true

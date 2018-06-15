@@ -7,8 +7,8 @@ require('../_app/Config.inc.php');
     <head>
     	<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    	<title></title>
-    	<link rel="shortcut icon" href="" type="image/x-icon"/>
+    	<title>Cadastro</title>
+    	<link rel="shortcut icon" href="media/neway2.png" type="image/x-icon"/>
     	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -23,7 +23,7 @@ require('../_app/Config.inc.php');
     				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     				<ul class="right hide-on-med-and-down">
     					<li><a href="../index.php">Home</a></li>
-    					<li><a href="register.php">Cadastre-se</a></li>
+    					<li><a href="login.php">Logar</a></li>
     				</ul>
     			</div>
     		</nav>
@@ -85,20 +85,20 @@ require('../_app/Config.inc.php');
 
                 if (!empty($dataRegister['UserRegister'])){
                   if (strlen($dataRegister['name']) < 2){
-                    frontErro("<div class='alerta error'><center> Nome muito pequeno </center> </div>", E_USER_WARNING);
-                    die();
+                    frontErro("Nome muito pequeno", E_USER_ERROR);
+                    return false;
                     }
                   if (strlen($dataRegister['pass']) < 6){
-                    frontErro("<div class='alerta error'><center> Senha muito curta </center> </div>", E_USER_WARNING);
-                    die();
+                    frontErro("Senha muito curta", E_USER_ERROR);
+                    return false;
                     }
                   if ($dataRegister['pass'] != $dataRegister['pass2'] ){
-                    frontErro("<div class='alerta error'><center> Confirmação da senha incorreta </center> </div>", E_USER_WARNING);
-                    die();
+                    frontErro("Confirmação da senha incorreta ", E_USER_ERROR);
+                    return false;
                     }
                   if(!filter_var($dataRegister['email'], FILTER_VALIDATE_EMAIL)){
-                    frontErro("<div class='alerta error'><center> E-mail incorreto </center> </div>", E_USER_WARNING);
-                    die();
+                    frontErro("E-mail incorreto", E_USER_ERROR);
+                    return false;
                   }
                     $register->exeRegister($dataRegister);
                     frontErro($register->getError()[0], $register->getError()[1]);
@@ -148,7 +148,7 @@ require('../_app/Config.inc.php');
                 </div>
 
                 <div class="input-field ">
-                  <input  type="text" type="text"  value=""
+                  <input  type="text" type="number"  value=""
                          class="validate"/>
                   <label for="icon_prefix">Numero:</label>
                 </div>

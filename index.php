@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>NeWay</title>
-	<link rel="shortcut icon" href="media/imagens/" type="image/x-icon"/> 
+	<link rel="shortcut icon" href="media/imagens/neway2.png" type="image/x-icon"/> 
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
