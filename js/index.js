@@ -54,9 +54,6 @@ Materialize.scrollFire(options);
     $('.collapsible').collapsible();
   });
 
-//Mudar o ícone do colapse quando fechado e aberto
-
-
 //mapa
 function initMap() {
         var uluru = {lat: -14.7237887, lng: -49.0856465};
