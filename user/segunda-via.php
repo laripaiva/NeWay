@@ -24,53 +24,70 @@ $nomef = filter_input(INPUT_GET, 'sobrenome');
     <div class="container">
         <div class="row"> 
             <div class="col l12">
-                <h3 class="center-align "> 2º Via de Boleto</h3>
-                <form name="ConfirmForm" class="formu" action="..\_app\Models\boleto_itau.php" method="post">
+                <h3 class="center-align "> 2ª Via de Boleto</h3>
+                <form name="ConfirmForm" class="formu z-depth-5" action="..\_app\Models\boleto_itau.php" method="post">
 
                     <p>Confirme os dados a seguir: </p>
-
-                    <div class="input-field ">
-                        <i class="material-icons prefix">account_circle</i>
-                        <input id="name" type="text" name="nome" value="<?php echo $nome;?>"/>
-                        <label for="name">Nome</label>
-                    </div>
-                    <div class="input-field ">
-                        <i class="material-icons prefix">account_circle</i>
-                        <input type="text" name="nome_final" value="<?php echo $nomef;?>"/>
-                        <label for="nome_final">Nome Final:</label>
-                    </div>
-                    <p>Informe os dados para gerar o boleto: </p>
                     <div class="row"> 
-                        <div class="col l12">
-                            <label>
-                                <span>CEP:</span>
-                                <input type="text" name="CEP" id="cep" value="" size="10" maxlength="9"
-                                onblur="pesquisacep(this.value);"/>
-                            </label>
-
-                            <label>
-                                <span>Rua:</span>
-                                <input type="text" name="endereco" id="rua"/>
-                            </label>
-                            <label>
-                                <span>Bairro:</span>
-                                <input type="text" name="bairro" id="bairro"/>
-                            </label>
-                            <label>
-                                <span>Numero:</span>
-                                <input type="number" name="numero" />
-                            </label>
-                            <label>
-                                <span>Cidade:</span>
-                                <input type="text" name="cidade" id="cidade"/>
-                            </label>
-                            <label>
-                                <span>Estado:</span>
-                                <input type="text" name="estado" id="uf"/>
-                            </label>
-                            <input type="submit" name="UserRegister" value="Imprimir boleto"/>
+                        <div class="col l6">
+                            <div class="input-field ">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="name" type="text" name="nome" value="<?php echo $nome;?>"/>
+                                <label for="name">Nome</label>
+                            </div>
                         </div>
+
+                        <div class="col l6">
+                            <div class="input-field ">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="nmf" type="text" name="nome_final" value="<?php echo $nomef;?>"/>
+                                <label for="nmf">Nome Final:</label>
+                            </div>
+                        </div>
+                        <div class="col l12 m12 s12">
+                            <p>Informe os dados para gerar o boleto: </p> 
+                        </div>
+
+                        <div class="col l6">
+                            <div class="input-field ">
+                                <i class="material-icons prefix">my_location</i>
+                                <input type="text" name="CEP" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);"/>
+                                <label for="cep">CEP:</label>
+                            </div>
+                            <div class="input-field ">
+                                <i class="material-icons prefix">location_on</i>
+                                <input type="text" name="endereco" id="rua"/>
+                                <label for="rua">Rua:</label>
+                            </div>
+                            <div class="input-field ">
+                                <i class="material-icons prefix">home</i>
+                                <input type="text" name="bairro" id="bairro"/>
+                                <label for="bairro">Bairro</label>
+                            </div>
+
+                        </div>
+                        <div class="col l6">
+                            <div class="input-field ">
+                                <i class="material-icons prefix">assistant_photo</i>
+                                <input type="number" name="numero" id="num" />
+                                <label for="num">Número:</label>
+                            </div>
+                            <div class="input-field ">
+                                <i class="material-icons prefix">location_city</i>
+                                <input type="text" name="cidade" id="cidade"/>
+                                <label for="cidade">Cidade</label>
+                            </div>
+                            <div class="input-field ">
+                                <i class="material-icons prefix">landscape</i>
+                                <input type="text" name="estado" id="uf"/>
+                                <label for="uf">Estado</label>
+                            </div>
+                        </div>
+                        <div class="col l12 m12 s12 center-align">
+                        <input class="center-align btn-large  light-blue darken-4" type="submit" name="UserRegister" value="Imprimir boleto"/>
                     </div>
+                    </div>
+
                 </form>
             </div>
         </div>
