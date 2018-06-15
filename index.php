@@ -21,7 +21,7 @@
 						<li><a href="#FAQ">FAQ</a></li>
 						<li><a href="#vantagens">Vantagens</a></li>
 						<li><a href="#professores">Professores</a></li>
-						<li><a href="badges.html">Contato</a></li>
+						<li><a href="#contato">Contato</a></li>
 						<li><a href="user/login.php">Logar</a></li>
 						<li><a href="user/register.php">Cadastro</a></li>
 					</ul>
@@ -289,7 +289,7 @@
 				</section>
 			</main>
 			
-			<footer class="page-footer">
+			<footer id="contato" class="page-footer">
 				<div class="container">
 					<div class="row">
 						<div class="col l6 s12">
