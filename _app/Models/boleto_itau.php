@@ -13,6 +13,12 @@ $cep = $_POST["CEP"];
 $bairro = $_POST["bairro"];
 $numero = $_POST["numero"];
 
+if(!$nome[0] || !$nome[2] || !$endereco || !$cidade || !$estado || !$cep || !$bairro || !$numero){
+  echo "<script>alert('Preencha Todos os campos');location.href='../../user/segunda-via.php'; </script>";
+}
+
+
+
 // DADOS DO BOLETO PARA O SEU CLIENTE
 $dias_de_prazo_para_pagamento = 5;
 $taxa_boleto = 2.95;

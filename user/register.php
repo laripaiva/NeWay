@@ -50,7 +50,11 @@ if ($login->checkLogin()){
                 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                 if (!empty($data['UserRegister'])){
                   unset($data['UserRegister']);
+<<<<<<< HEAD
                 }//estava no final do fomr
+=======
+                }
+>>>>>>> a4f0464cdf44a727451e909eb0403f45c99688a6
               ?>
 
               <div class="input-field ">
@@ -95,7 +99,11 @@ if ($login->checkLogin()){
             <center><input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect light-blue darken-4 btn center-align"/></center>
             </form>
           <?php
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> a4f0464cdf44a727451e909eb0403f45c99688a6
             ?>
             <?php
                 $register = new Register;
