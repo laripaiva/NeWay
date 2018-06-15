@@ -50,6 +50,7 @@ if ($login->checkLogin()){
                 $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
                 if (!empty($data['UserRegister'])){
                   unset($data['UserRegister']);
+                }
               ?>
 
               <div class="input-field ">
@@ -94,7 +95,7 @@ if ($login->checkLogin()){
             <center><input type="submit" name="UserRegister" value="Cadastrar" class="waves-effect waves-light btn center-align"/></center>
             </form>
           <?php
-        }
+
             ?>
             <?php
                 $register = new Register;

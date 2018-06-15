@@ -18,17 +18,20 @@ $nomef = filter_input(INPUT_GET, 'sobrenome');
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/segundavia.css">
+    <link rel="stylesheet" href="css/cad.css">
 </head>
+
+
 
 <body class="login">
     <div class="container">
-        <div class="row"> 
+        <div class="row">
             <div class="col l12">
                 <h3 class="center-align "> 2ª Via de Boleto</h3>
                 <form name="ConfirmForm" class="formu z-depth-5" action="..\_app\Models\boleto_itau.php" method="post">
 
                     <p>Confirme os dados a seguir: </p>
-                    <div class="row"> 
+                    <div class="row">
                         <div class="col l6">
                             <div class="input-field ">
                                 <i class="material-icons prefix">account_circle</i>
@@ -45,7 +48,7 @@ $nomef = filter_input(INPUT_GET, 'sobrenome');
                             </div>
                         </div>
                         <div class="col l12 m12 s12">
-                            <p>Informe os dados para gerar o boleto: </p> 
+                            <p>Informe os dados para gerar o boleto: </p>
                         </div>
 
                         <div class="col l6">
@@ -89,6 +92,14 @@ $nomef = filter_input(INPUT_GET, 'sobrenome');
                     </div>
 
                 </form>
+                <?php
+                  $data = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+                  if (!empty($data['UserRegister'])){
+                  if(!$data['nome'] || !$data['nome_final'] || !$data['cidade'] || !$data['CEP'] || !$data['estado'] || !$data['bairro'] || !$data['numero'] || !$data['endereco']){
+                    echo "<div class='alerta error'><center>Preencha todos os campos</center></div>";
+                    return false;
+                  }
+                } ?>
             </div>
         </div>
     </div>
