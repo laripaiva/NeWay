@@ -21,6 +21,7 @@ if ($login->checkLogin()){
       <link rel="stylesheet" href="css/reset.css" />
       <link rel="stylesheet" href="css/admin.css" />
       <link rel="stylesheet" type="text/css" href="css/style.css" />
+      <link rel="stylesheet" href="css/cad.css">
 
     </head>
     <body>
@@ -70,13 +71,13 @@ if ($login->checkLogin()){
             if (!empty($dataLogin['UserLogin'])){
                 $login->exeLogin($dataLogin);
                 if (!$login->getResult()){
-                    frontErro($login->getError()[0], $login->getError()[1]);
+                    echo("<div class='alerta atencao'><center>".$login->getError()[0]."</center></div>");
                     $userId = $login->getId();
                     $readUser = new Read;
                     $readUser->exeRead("users", "WHERE id = :id", "id={$userId}");
                     $user = $readUser->getResult()[0];
         ?>
-                  <div>Clique <a href="segunda-via.php?aluno=<?php echo $user['id'];?>&nome=<?php echo $user['nome'];?>&sobrenome=<?php echo $user['nome_final'];?>">aqui</a> para imprimir a segunda via do boleto.</div>
+                  <div class="alerta atencao"><center>Clique <a href="segunda-via.php?aluno=<?php echo $user['id'];?>&nome=<?php echo $user['nome'];?>&sobrenome=<?php echo $user['nome_final'];?>">aqui</a> para imprimir a segunda via do boleto.</center></div>
         <?php
                 }else{
                     header('Location: dashboard.php?exe=index');
