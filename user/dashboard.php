@@ -26,7 +26,7 @@ if ($logoff){
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title></title>
-        <link rel="shortcut icon" href="" type="image/x-icon"/> 
+        <link rel="shortcut icon" href="" type="image/x-icon"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -38,9 +38,9 @@ if ($logoff){
         <script src="js/home.js"></script>
         <script src="js/visu.js"></script>
         <link rel="stylesheet" href="css/dashboard.css">
-        <link rel="stylesheet" href="css/usus.css"> 
+        <link rel="stylesheet" href="css/usus.css">
         <!-- <link rel="stylesheet" href="css/gerenciarUsuario.css">  -->
-        <link rel="stylesheet" href="css/style.css"> 
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/home.css">
         <!-- <link rel="stylesheet" href="css/visu.css"> -->
         <!-- <link rel="stylesheet" href="CSS/cadCurso.css">
@@ -50,7 +50,7 @@ if ($logoff){
             $(document).ready(function() {
                 $('select').material_select();
             });
-            }//]]> 
+            }//]]>
 
         </script>
         <script type="text/javascript">//<![CDATA[
@@ -70,7 +70,6 @@ if ($logoff){
                 <ul class="right hide-on-med-and-down">
                     <li><a href="dashboard.php?exe=index">Home</a></li>
                     <li><a href="dashboard.php?exe=cInscritos">Cursos Inscritos</a></li>
-                    <li><a href="dashboard.php?exe=#">Certificados</a></li>
                     <li><a  href="dashboard.php?logoff=true">Sair</a></li>
                 </ul>
             </div>
@@ -99,7 +98,7 @@ if ($logoff){
                 $includepatch = __DIR__ . '\\dashboard.php';
             }
             if (file_exists($includepatch)):
-                require_once($includepatch); 
+                require_once($includepatch);
             else:
                 echo "<div class=\"content notfound\">";
                 frontErro("<b>Erro ao incluir tela:</b>Erro ao incluir o controller /{$getexe}.php!", E_USER_ERROR);

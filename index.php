@@ -1,10 +1,21 @@
+<?php
+session_start();
+require('./_app/Config.inc.php');
+
+$login = new Login(2);
+if ($login->checkLogin()){
+    header('Location:./user/dashboard.php?exe=index');
+    }
+
+?>
+
 <!DODCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>NeWay</title>
-	<link rel="shortcut icon" href="media/imagens/neway2.png" type="image/x-icon"/> 
+	<link rel="shortcut icon" href="media/imagens/neway2.png" type="image/x-icon"/>
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
@@ -12,7 +23,7 @@
 </head>
 <body>
 	<header  class="">
-		<div class="navbar-fixed"> 
+		<div class="navbar-fixed">
 			<nav id="menuP" >
 				<div class="nav-wrapper">
 					<a href="#!" class="brand-logo">NeWaY</a>
@@ -27,13 +38,13 @@
 					</ul>
 				</div>
 			</nav>
-		</div>	
+		</div>
 	</header>
 	<main>
 		<div id="realiza" class="visible-desktop">
 			<img id="" class="img-real" src="media/imagens/selo.png" alt="">
 		</div>
-		
+
 		<section>
 			<div id="overlay">
 				<div id="title">
@@ -58,7 +69,7 @@
 		<section id="oqeh" class="scrollspy">
 			<div class="section bloco ">
 				<div class="container pad z-depth-5">
-					<h4 class="header tite">O que é:</h4>	
+					<h4 class="header tite">O que é:</h4>
 					<div class="row">
 						<div class="col s12 m12 l12 ">
 							<p class="conteudo">A NeWay é uma plataforma de ensino à distância que disponibiliza cursos de qualidade e excelência para alavancar a carreira profissional de seus usuários. Com o pagamento de apenas uma assinatura, o usuário ganha o acesso por durante 1 ano à todos os cursos disponibilizaados nesse período! </p>
@@ -79,7 +90,7 @@
 		<section id="FAQ" class="scrollspy">
 			<div class="section bloco">
 				<div class="container pad z-depth-5">
-					<h4 class="header tite">FAQ</h4>	
+					<h4 class="header tite">FAQ</h4>
 					<div class="row">
 						<div class="col s12 m12 l12 ">
 							<p class="conteudo">I am a very simple card.I am good at containing small bits of information. I am convenient because I require little markup to use effectively. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia odio nec vehicula dictum. Nunc eu urna at massa aliquam luctus sit amet non urna. Sed mattis venenatis augue, sed porttitor libero euismod eu. Aliquam finibus tincidunt nibh, ac mattis ante pharetra vel. Nulla luctus vehicula vehicula. Mauris non porta nulla. Vestibulum ac pretium ipsum, vel mollis elit. </p>
@@ -144,7 +155,7 @@
 		<section id="vantagens" class="scrollspy">
 			<div class="section bloco">
 				<div class="container pad z-depth-5">
-					<h4 class="header tite">Vantagens</h4>	
+					<h4 class="header tite">Vantagens</h4>
 					<div class="wrapper">
 						<div class="cols">
 							<div class="col-card" ontouchstart="this.classList.toggle('hover');">
@@ -233,7 +244,7 @@
 				<section id="professores" class="scrollspy">
 					<div class="section bloco">
 						<div class="container pad z-depth-5">
-							<h4 class="header tite">Professores</h4>	
+							<h4 class="header tite">Professores</h4>
 							<div class="row">
 								<div class="col s12 m6 l4">
 									<div class="card">
@@ -288,7 +299,7 @@
 					</div>
 				</section>
 			</main>
-			
+
 			<footer id="contato" class="page-footer">
 				<div class="container">
 					<div class="row">
@@ -315,8 +326,8 @@
 			<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 			<script src="js/index.js" type="text/javascript" charset="utf-8" async defer></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-			<script async defer 
+			<script async defer
 			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApKgkM7lrCqcTPI3x8NFKcqMYbc_CqCzU&callback=initMap">
 		</script>
-	</body>	
+	</body>
 	</html>
