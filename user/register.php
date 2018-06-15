@@ -1,6 +1,11 @@
 <?php
 session_start();
 require('../_app/Config.inc.php');
+
+$login = new Login(2);
+if ($login->checkLogin()){
+    header('Location:./dashboard.php?exe=index');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,7 +24,7 @@ require('../_app/Config.inc.php');
       <header>
     		<nav>
     			<div class="nav-wrapper">
-    				<a href="#!" class="brand-logo">NeWay</a>
+    				<a href="../index.php" class="brand-logo">NeWay</a>
     				<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     				<ul class="right hide-on-med-and-down">
     					<li><a href="../index.php">Home</a></li>
@@ -39,14 +44,14 @@ require('../_app/Config.inc.php');
               <div class="input-field ">
                 <i class="material-icons prefix">assignment_ind</i>
     						<input name="name" id="icon_prefix" type="text" class="validate">
-    						<label for="icon_prefix">Nome</label>
+    						<label class="active" for="icon_prefix">Nome</label>
     					</div>
                 <!--<input type="name" name="name" id="name"/>-->
 
                 <div class="input-field ">
       						<i class="material-icons prefix">assignment_ind</i>
       						<input type="text" name="final_name" id="icon_prefix"  class="validate">
-      						<label for="icon_prefix">Sobrenome</label>
+      						<label class="active" for="icon_prefix">Sobrenome</label>
       					</div>
 
                 <!-- <input type="last_name" name="final_name" id="final_name"/> -->
@@ -54,21 +59,21 @@ require('../_app/Config.inc.php');
                 <div class="input-field ">
       						<i class="material-icons prefix">mail</i>
       						<input type="email" name="email" id="icon_prefix" type="text" class="validate">
-      						<label for="icon_prefix">E-mail</label>
+      						<label class="active" for="icon_prefix">E-mail</label>
       					</div>
 
                 <!--<input type="email" name="email" id="email"/> -->
                 <div class="input-field ">
       						<i class="material-icons prefix">lock_outline</i>
       						<input  type="password" name="pass" id="icon_telephone" type="tel" class="validate">
-      						<label for="icon_telephone">Senha</label>
+      						<label class="active" for="icon_telephone">Senha</label>
       					</div>
 
                 <!--<input type="password" name="pass" id="pass"/> -->
                 <div class="input-field ">
                   <i class="material-icons prefix">lock_outline</i>
                   <input type="password" name="pass2" id="icon_telephone" type="tel" class="validate">
-                  <label for="icon_telephone">Confirmar Senha</label>
+                  <label class="active" for="icon_telephone">Confirmar Senha</label>
                 </div>
                 <!--
                 <button class="waves-effect waves-light btn center-align" type="submit" name="UserRegister">Cadastrar
@@ -84,11 +89,17 @@ require('../_app/Config.inc.php');
                 //var_dump ($dataRegister);
 
                 if (!empty($dataRegister['UserRegister'])){
-                  if (strlen($dataRegister['name']) < 2){
+                  $register->exeRegister($dataRegister);
+                  //frontErro($register->getError()[0], $register->getError()[1]);
+                  if (!$register->getResult()){
+                    frontErro($register->getError()[0], $register->getError()[1]);
+                    return false;
+                  }
+                  if (strlen($dataRegister['name']) == 1 || strlen($dataRegister['name']) == 2 ){
                     frontErro("Nome muito pequeno", E_USER_ERROR);
                     return false;
                     }
-                  if (strlen($dataRegister['pass']) < 6){
+                  if (strlen($dataRegister['pass']) < 6 && strlen($dataRegister['pass']) != 0){
                     frontErro("Senha muito curta", E_USER_ERROR);
                     return false;
                     }
@@ -100,11 +111,7 @@ require('../_app/Config.inc.php');
                     frontErro("E-mail incorreto", E_USER_ERROR);
                     return false;
                   }
-                    $register->exeRegister($dataRegister);
-                    frontErro($register->getError()[0], $register->getError()[1]);
-                    if (!$register->getResult()){
-                        frontErro($register->getError()[0], $register->getError()[1]);
-                    }
+
                 }
             ?>
             <?php
@@ -120,49 +127,49 @@ require('../_app/Config.inc.php');
                       <p>Confirme os dados a seguir: </p>
                     <div class="input-field ">
                       <input  value="<?php echo $print['nome'];?>" name="name" id="icon_prefix" type="text" class="validate">
-                      <label for="icon_prefix">Nome</label>
+                      <label class="active" for="icon_prefix">Nome</label>
                     </div>
 
                     <div class="input-field ">
                       <input name="nome_final" value="<?php echo $print['nome_final'];?>" name="name" id="icon_prefix" type="text" class="validate">
-                      <label for="icon_prefix">Sobrenome:</label>
+                      <label class="active" for="icon_prefix">Sobrenome:</label>
                     </div>
 
                 <p>Informe os dados para gerar o boleto: </p>
                 <div class="input-field ">
                   <input  type="text" name="CEP" id="cep" value="" size="10" maxlength="9"
                          onblur="pesquisacep(this.value);"class="validate"/>
-                  <label for="icon_prefix">CEP:</label>
+                  <label class="active" for="icon_prefix">CEP:</label>
                 </div>
 
                 <div class="input-field ">
                   <input  type="text" type="text" name="endereco" id="rua" value=""
                          class="validate"/>
-                  <label for="icon_prefix">RUA:</label>
+                  <label class="active" for="icon_prefix">RUA:</label>
                 </div>
 
                 <div class="input-field ">
-                  <input  type="text" type="text" name="bairro" id="bairro" value=""
+                  <input class="active" type="text" type="text" name="bairro" id="bairro" value=""
                          class="validate"/>
-                  <label for="icon_prefix">Bairro:</label>
+                  <label class="active" for="icon_prefix">Bairro:</label>
                 </div>
 
                 <div class="input-field ">
                   <input  type="text" type="number"  value=""
                          class="validate"/>
-                  <label for="icon_prefix">Numero:</label>
+                  <label class="active" for="icon_prefix">Numero:</label>
                 </div>
 
                 <div class="input-field ">
-                  <input  name="cidade" id="cidade"  type="text"  value=""
+                  <input class="active"  name="cidade" id="cidade"  type="text"  value=""
                          class="validate"/>
-                  <label for="icon_prefix">Cidade:</label>
+                  <label class="active" for="icon_prefix">Cidade:</label>
                 </div>
 
                 <div class="input-field ">
                   <input name="estado" id="uf" type="text"  value=""
                          class="validate"/>
-                  <label for="icon_prefix">Estado:</label>
+                  <label class="active" for="icon_prefix">Estado:</label>
                 </div>
 
                 <input type="submit" name="UserRegister" class="waves-effect waves-light btn center-align" value="Imprimir boleto"/>

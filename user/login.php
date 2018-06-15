@@ -1,7 +1,10 @@
 <?php
 session_start();
 require('../_app/Config.inc.php');
-
+$login = new Login(2);
+if ($login->checkLogin()){
+    header('Location:./dashboard.php?exe=index');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -45,13 +48,13 @@ require('../_app/Config.inc.php');
   					  <div class="input-field ">
               <i class="material-icons prefix">assignment_ind</i>
               <input type="email" name="email" id="login" type="text" class="validate">
-              <label for="login">Login</label>
+              <label class="active" for="login">Login</label>
             </div>
 
             <div class="input-field ">
               <i class="material-icons prefix">lock_outline</i>
               <input id="password" type="password" name="pass" id="pass" class="validate">
-              <label for="password">Password</label>
+              <label class="active" for="password">Password</label>
     				</div>
             <div class="center-align">
               <input type="submit" name="UserLogin" class="waves-effect waves-light btn" value="Entrar"/>

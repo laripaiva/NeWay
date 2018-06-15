@@ -16,7 +16,7 @@ $nModulos = $readData->getRowCount();
 
 <?php
     //Pega o id e nome do curso da URL
-    
+
     $courseId = filter_input (INPUT_GET, 'course', FILTER_VALIDATE_INT);
     $moduleId = filter_input (INPUT_GET, 'modulo', FILTER_VALIDATE_INT);
     $update = filter_input(INPUT_GET, 'update', FILTER_VALIDATE_BOOLEAN);
@@ -37,10 +37,10 @@ $nModulos = $readData->getRowCount();
 ?>
     <div class="neway z-depth-5">
        <p class="title center-align">Módulos do curso <?php echo $dataCourse['titulo'];?></p>
-    </div>  
+    </div>
 
     <section id="" class="categoria container">
-        <?php 
+        <?php
             if ($moduleId && $update){
                frontErro("Módulo <b>{$modulos['titulo']}</b> atualizado com sucesso.", ACCEPT);
             }elseif($empty){
@@ -48,11 +48,11 @@ $nModulos = $readData->getRowCount();
             }
         ?>
         <div class="cads">
-            <?php   
+            <?php
             $certificado=0;
                 $readModule = new Read;
                 $readModule->exeRead("modules", "WHERE id_courses = :idc", "idc={$dataCourse['id']}");
-            
+
                 foreach ($readModule->getResult() as $ses){
                     extract($ses);
             ?>
@@ -61,20 +61,20 @@ $nModulos = $readData->getRowCount();
 						<span class="card-title activator grey-text text-darken-4"><?=$titulo;?></span>
                         <p><b>Categoria:</b><?=$titulo;?></p>
                         <p><b>Descrição:</b><?=$titulo;?></p>
-                        <?php 
-                            
+                        <?php
+
                             $readMatricula = new Read;
                             $readMatricula->exeRead("watch_courses", "WHERE id_user = :u AND id_courses = :c", "u={$userlogin['id']}&c={$courseId}");
                             $readMatricula = $readMatricula->getResult()[0];
-                            
+
                             $readProgress = new Read;
                             $readProgress->exeRead("historic", "WHERE id_watch_courses = :d", "d={$readMatricula['id']}");
-                                           
-                            
+
+
                             if ($readMatricula){
                         ?>
-                                <?php 
-                    
+                                <?php
+
                                     for ($i=0 ; $i < $readProgress->getRowCount(); $i++){
                                         $historico = $readProgress->getResult()[$i];
                                         if ($historico['id_module'] ==  $id){
@@ -83,36 +83,36 @@ $nModulos = $readData->getRowCount();
                                             // $certificado= $certificado + 1;
                                 ?>
                                 <p class="tagline"><b>Status: </b><?php echo $result; ?></p>
-                                <?php 
+                                <?php
 
                                         }
                                     }
                                 ?>
                                 <p><a href="dashboard.php?exe=modulos/index&course=<?=$id?>">Visualizar Textos</a></p>
 						        <p><a href="dashboard.php?exe=videos/index&modulo=<?=$id?>&aluno=<?php echo $userlogin['id']; ?>"> Visualizar Vídeos</a></p>
-                        <?php  
+                        <?php
                             }
 
                         ?>
-                        
+
 					</div>
                 </div>
             <?php
                     }
             ?>
-             <?php      
+             <?php
                         if ($readModule->getRowCount() == $certificado){
                             $dados = new Read;
                             $dados->exeRead("users", "WHERE id = :id", "id={$userlogin['id']}");
                             $curso = new Read;
-                            $curso->exeRead("courses", "WHERE id = :id", "id={$courseId}"); 
+                            $curso->exeRead("courses", "WHERE id = :id", "id={$courseId}");
                             $dados= $dados->getResult()[0];
                             $curso =$curso->getResult()[0];
                     ?>
-                        <a href="..\_app\Models\gerador.php?mat=<?php echo $dados['id'];?>&nome=<?php echo $dados['nome'] . ' ' . $dados['nome_final'] ;?>&curso=<?php echo $curso['titulo'];?>&ch=<?php echo $curso['carga_horaria'];?>">Curso concluído. Imprima o certificado.</a> 
-                    <?php 
+                        <a href="..\_app\Models\gerador.php?aluno=<?php echo $dados['id'];?>&curso=<?php echo $curso['titulo'];?>">Curso concluído. Imprima o certificado.</a> 
+                    <?php
                         }
                     ?>
-        </div> 
+        </div>
     </section>
 </div>
