@@ -30,7 +30,6 @@ if ($logoff){
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
         <script src="js/gerenciarCategoria.js"></script>
         <script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8" async defer></script>
 	    <script src="js/materialize.js"></script>
