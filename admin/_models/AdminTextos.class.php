@@ -65,7 +65,7 @@
             $readText->exeRead("texts", "WHERE id= :id", "id={$this->textoId}");
             $text = $readText->getResult()[0];
 
-            $this->moduleId = $text['id'];
+            $this->moduleId = $text['id_modules'];
 
             //Verificar se há campos em branco no array, se houver retorna erro
             if (in_array('', $this->data)){
@@ -135,24 +135,14 @@
             }else{
                 $where= '';
             } 
-           
-            var_dump($this->moduleId);
-            // $readName = new Read;
-            // $readName->exeRead(self::Entity, "WHERE {$where} AND titulo = :t", "t={$this->data['titulo']}"); 
+            $readName = new Read;
+            $readName->exeRead(self::Entity, "WHERE {$where} AND titulo = :t", "t={$this->data['titulo']}"); 
 
-            // var_dump($readName->getResult());
-
-            // echo $this->textoId;
-            // echo $this->data['titulo'];
-            // var_dump($readName->getResult()[0]);
-            // Caso exista um curso já cadastrado com esse nome será retornado um erro
-            // if ($readName->getResult()){
-            //     // $this->error = ['<b>Erro ao atualizar</b>, nome de arquivo já existente no módulo.',  E_USER_WARNING];
-            //     echo "para";
-            // }
-            // else{
-            //    self:: Update();
-            // }
+            if ($readName->getResult()){
+                $this->error = ['<b>Erro ao atualizar</b>, nome de arquivo já existente no módulo.',  E_USER_WARNING];
+            }else{
+               self:: Update();
+            }
         }
 
         private function Create(){
@@ -165,20 +155,19 @@
             if ($create->getResult()){
                 //Obter ID do registro inserido
                 $this->result = $create->getResult();
-                $this->error = ["<b>Sucesso:</b> O vídeo {$this->data['titulo']} foi cadastrado no sistema.", E_USER_NOTICE];
+                $this->error = ["<b>Sucesso:</b> O arquivo {$this->data['titulo']} foi cadastrado no sistema.", E_USER_NOTICE];
             }   
         }
 
 
         private function Update(){
-            echo "oi bb";
-            // $update = new Update;
-            // //entity -> variável com nome da tabela no BD
-            // $update->exeUpdate (self::Entity, $this->data, "WHERE id = :i", "i={$this->videoId}");
-            // if ($update->getResult()){
-            //     $this->result = true;
-            //     $this->error = ["<b>Sucesso:</b> O vídeo <b>{$this->data['titulo']}</b> foi atualizado no sistema.", ACCEPT];
-            // }
+            $update = new Update;
+            //entity -> variável com nome da tabela no BD
+            $update->exeUpdate (self::Entity, $this->data, "WHERE id = :i", "i={$this->textoId}");
+            if ($update->getResult()){
+                $this->result = true;
+                $this->error = ["<b>Sucesso:</b> O arquivo <b>{$this->data['titulo']}</b> foi atualizado no sistema.", ACCEPT];
+            }
            
         }
     }   
