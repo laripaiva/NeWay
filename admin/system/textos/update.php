@@ -9,62 +9,70 @@ if (!class_exists('Login')) :
 endif;
 ?>
 
-<div>
-<article class="content form_create">
+<div class="content form_create">
+    <div class="neway z-depth-5">
+        <p class="title center-align">Atualizar Texto</p>
+    </div>
         <?php
-            $textoId = filter_input (INPUT_GET, 'texto', FILTER_VALIDATE_INT);
-            $readText = new Read;
-            $readText->exeRead("texts", "WHERE id = :id", "id={$textoId}");
-            $dataText = $readText->getResult()[0];
-            // var_dump($dataText);
+            // //PEGA ID DO MODULO PELA URL E FAZ LEITURA
+            $moduleId = filter_input (INPUT_GET, 'module', FILTER_VALIDATE_INT);
+            $arquivoId = filter_input (INPUT_GET, 'arquivo', FILTER_VALIDATE_INT);
 
-            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
-
-            if (!empty($data['SendPostForm'])){
-                unset ($data['SendPostForm']);
-                require('_models\AdminTextos.class.php');
-                // var_dump($data);
-                $update = new AdminTextos;
-                $update->ExeUpdateTexts($data, $textoId);
-                
-                // frontErro($update->getError()[0], $update->getError()[1]);
-
-                // if ($update->getResult()[0]){
-                //     // header ('Location: painel.php?exe=videos/upload&update=true&video=' . $videoId);
-                //     var_dump($update->getResult()[0]);
-                // }
-            }
-            // else{
-            //     $read = new Read;
-            //     $read->exeRead("videos", "WHERE id = :id", "id={$videoId}");
-            //     if (!$read->getResult()){
-            //         //Se for gerado update falso, quer dizer que tentamos atualizar algo que não existe
-            //         header ('Location: painel.php?exe=cursos/index&empty=true');
-            //     }else{
-            //         $data = $read->getResult()[0];
-            //     }
-            // }
+            if ($moduleId){
+                $readModule = new Read;
+                $readModule->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
+                if (!$readModule->getResult()){
+                    header ('Location: painel.php?exe=index&empty=true');
+                }elseif ($arquivoId){
+                    $readFile = new Read;
+                    $readFile->exeRead("texts", "WHERE id = :id AND id_modules = :idm", "id={$arquivoId}&idm={$moduleId}");
+                    if (!$readFile->getResult()){
+                        header ('Location: painel.php?exe=index&empty=true');
+                    }else{
+                        $dataFile= $readFile->getResult()[0];
+                    }
+                }elseif($arquivoId==null){
+                    header ('Location: painel.php?exe=index&empty=true');
+                }
+        }elseif($moduleId==null){
+            header ('Location: painel.php?exe=index&empty=true');
+        }
+            
         ?>
-
-        <article>
-            <form name="TextoForm" action="" method="post">
-                <label class="label">
-                    <span class="field">Titulo:</span>
-                    <input type="text" name="titulo" value="<?php if (isset($dataText)) echo $dataText['titulo']; ?>" />
-                </label>
-
-                <label class="label">
-                    <span class="field">Descrição:</span>
-                    <textarea name="descricao" rows="5"><?php if (isset($dataText)) echo $dataText['descricao']; ?></textarea>
-                </label>
-
-                <input type="submit" class="btn green" value="Prosseguir alteração" name="SendPostForm" />
-            </form>
-        </article>
+        <section class="container">
+            <?php
+                $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
         
-        
-    </article>
-    <script src="JS/jquery-3.3.1.js" type="text/javascript" charset="utf-8" async defer></script>
-	<script src="JS/materialize.js"></script>
-	<script src="JS/usus.js"></script>
+                if (!empty($data['SendPostForm'])){
+                    unset ($data['SendPostForm']);
+
+                    require('_models\AdminTextos.class.php');
+                    $cadastra = new AdminTextos;
+                    $cadastra->ExeUpdateTexts($data, $dataFile['id']);
+                    
+                    if (!$cadastra->getResult()){
+                        frontErro($cadastra->getError()[0],$cadastra->getError()[0]);
+                    }else{
+                        header ('Location: painel.php?exe=textos/upload&update=true&file=' . $dataFile['id']);
+                    }
+                    
+                }
+            ?>
+			<div class="row">
+                <form name="CursoForm" action="" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+                            <input type="text" id="textarea1" class="materialize-textarea" name="titulo" value="<?php if (isset($dataFile)) echo $dataFile['titulo']; ?>"></textarea>
+							<label id="textarea1">Título do Arquivo</label>
+						</div>
+						<div class="input-field col s12">
+							<input type="text" id="textarea1" class="materialize-textarea" name="descricao" value="<?php if (isset($dataFile)) echo  $dataFile['descricao']; ?>"></textarea>
+							<label for="textarea1">Descrição</label>
+						</div>
+					</div>	
+                    <input type="submit" class="btn waves-effect waves-light sub" value="Atualizar Arquivo" name="SendPostForm" />
+                    
+				</form>
+			</div>
+	    </section>
 </div> 

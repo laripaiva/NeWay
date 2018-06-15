@@ -12,8 +12,17 @@
     <div class="neway z-depth-5">
         <p class="title center-align">Gerenciar vídeos no módulo <?php echo $nome['titulo']; ?><a href="painel.php?exe=videos/create&module=<?php echo $moduleId; ?>" class="waves-effect waves-light btn ">Adicionar video</a></p>
     </div>
-    
+
+    <div class="container">
         <?php
+            $empty = filter_input(INPUT_GET, 'empty', FILTER_VALIDATE_BOOLEAN);
+            $update = filter_input(INPUT_GET, 'update', FILTER_VALIDATE_BOOLEAN);
+            $delete = filter_input(INPUT_GET, 'delete', FILTER_VALIDATE_BOOLEAN);
+            if ($empty){
+                frontErro("Você tentou editar um vídeo que não existe no sistema.", E_USER_NOTICE);
+            }elseif($delete){
+                frontErro("O vídeo foi excluído.", ACCEPT);
+            }
             $empty = filter_input(INPUT_GET, 'empty', FILTER_VALIDATE_BOOLEAN);
             $update = filter_input(INPUT_GET, 'update', FILTER_VALIDATE_BOOLEAN);
             $delete = filter_input(INPUT_GET, 'delete', FILTER_VALIDATE_BOOLEAN);
@@ -27,12 +36,19 @@
                 frontErro("Não há arquivos/textos registrados nesse módulo.", E_USER_NOTICE);
             }
 
+        ?> 
+    </div>
+    
+        <?php
+            
+
             foreach ($readData->getResult() as $ses){
                 extract($ses); 
         ?>
             <section>
                 <header>
                 <div class="container">
+
                     <h1 class="center-align"><?=$titulo; ?></h1><br> 
                     <p class="tagline"><b>Descrição: </b><?=$descricao; ?></p>
                     <embed height="500px" src="<?=$diretorio; ?>" width="100%"></embed>

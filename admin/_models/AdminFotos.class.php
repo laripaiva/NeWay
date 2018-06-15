@@ -52,6 +52,25 @@
                 }
             }
         }
+
+        public function ExeUpdateUploadFiles(array $data){
+            $this->data = $data;
+            /**
+             * PEGANDO ID DO MODULO
+             */
+            
+            $readVideo = new Read;
+            $readVideo->exeRead("texts", "WHERE id= :id", "id={$this->data['id']}");
+            if ($readVideo->getResult()[0]){
+                $update = new Update;
+                $update->exeUpdate ("texts", $this->data, "WHERE id = :i", "i={$this->data['id']}");
+                if ($update->getResult()){
+                    $this->error = ["<b>Sucesso:</b> upload realizado.", ACCEPT];
+                    $this->result = true;
+                }
+            }
+        }
+
         public function ExeUpdateVideos(array $data, $videoId, $dir = null){
             $this->data = $data;
             $this->videoId = (int) $videoId;

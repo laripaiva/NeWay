@@ -9,45 +9,48 @@ if (!class_exists('Login')) :
 endif;
 ?>
 
-<div class="content form_create">
+<div class="content form_create">   
+    <div class="neway z-depth-5">
+        <p class="title center-align">Adicionar arquivo</p>
+    </div>
+  
     <?php
-        $moduleId = filter_input (INPUT_GET, 'module', FILTER_VALIDATE_INT);
-        $readModule = new Read;
-        $readModule->exeRead("modules", "WHERE id = :id", "id={$moduleId}");
-        $module= $readModule->getResult()[0];
+        $modulo = filter_input (INPUT_GET, 'module', FILTER_VALIDATE_INT);
+        $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
+        if (!empty($data['SendPostForm'])){
+            unset ($data['SendPostForm']);      
+
+            require('_models\AdminTextos.class.php');
+            $cadastra = new AdminTextos;
+            $cadastra->ExeCreateTexts($data, $modulo);
     ?>
-    <article>
+   
+   <section class="container">
+    <?php       
 
-        <header>
-            <h1>Adicionar texto no módulo <?php echo $module['titulo'];?>:</h1>
-        </header>
-        <?php
-            $data = filter_input_array (INPUT_POST, FILTER_DEFAULT);
-            if (!empty($data['SendPostForm'])){
-                unset ($data['SendPostForm']);
-
-                require('_models\AdminTextos.class.php');              
-                $cadastra = new AdminTextos;
-                $cadastra->ExeCreateTexts($data, $moduleId);
-                frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
-                if ($cadastra->getResult()){
-                    header ('Location: painel.php?exe=textos/upload&create=true&texto=' . $cadastra->getResult() . '&module=' . $moduleId);     
-                } 
-            }
-        ?>
-        <form name="TextoForm" action="" method="post">
-            <label class="label">
-                <span class="field">Titulo:</span>
-                <input type="text" name="titulo" value="<?php if (isset($data)) echo $data['titulo']; ?>" />
-            </label>
-
-            <label class="label">
-                <span class="field">Descrição:</span>
-                <textarea name="descricao" rows="5"><?php if (isset($data)) echo $data['descricao']; ?></textarea>
-            </label>
-
-            <input type="submit" class="btn green" value="Prosseguir cadastro" name="SendPostForm" />
-        </form>
-
-    </article>
+        if($cadastra->getResult()){
+            header ('Location: painel.php?exe=textos/upload&create=true&file=' . $cadastra->getResult());
+        }else{
+            frontErro($cadastra->getError()[0], $cadastra->getError()[1]);
+        }
+    }
+    ?>
+    </section>  
+        <section class="container">
+			<div class="row">
+                <form name="CursoForm" action="" method="post">
+					<div class="row">
+						<div class="input-field col s12">
+                        <textarea id="textarea1" class="materialize-textarea" name="titulo" value="<?php if (isset($data)) echo $data['titulo']; ?>"></textarea>
+							<label id="textarea1">Título do arquivo</label>
+						</div>
+						<div class="input-field col s12">
+							<textarea id="textarea1" class="materialize-textarea" name="descricao" value="<?php if (isset($data)) echo $data['descricao']; ?>"></textarea>
+							<label for="textarea1">Descrição</label>
+						</div>
+					</div>	
+                    <input type="submit" class="btn waves-effect waves-light sub" value="Cadastrar arquivo" name="SendPostForm" />
+				</form>
+			</div>
+	    </section>
 </div> 
